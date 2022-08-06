@@ -1,8 +1,15 @@
 [package]
-name = "algorithms-rs"
-version = "0.1.0"
-edition = "2021"
-author = "davirain<davirian.yin@gmail.com>"
+name         = "algorithms-rs"
+version      = "0.1.0"
+edition      = "2021"
+authors      = ["davirain <davirian.yin@gmail.com>"]
+license      = "MIT"
+readme       = "README.md"
+keywords     = ["alogrithms"]
+description  = """
+    Implementation of The Introduction to Algorithms Thrid Edition 
+    By Rust programming Language
+"""
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
