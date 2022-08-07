@@ -1,6 +1,6 @@
 [package]
 name         = "algorithms-rs"
-version      = "0.1.1"
+version      = "0.1.2"
 edition      = "2021"
 authors      = ["davirain <davirian.yin@gmail.com>"]
 license      = "MIT"
