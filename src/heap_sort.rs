@@ -90,6 +90,55 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
+    pub fn min_siftup(&mut self, index: usize) {
+         let mut i = index;
+         loop {
+            // if i is root idx will break
+            if i == 0 {
+                break;
+            }
+
+            // get parent index
+            let p = parent(i);
+
+            // when parent node <= child node will break
+            if self.data[p] <= self.data[i] {
+                break;
+            }
+
+            // swap parent node idx with child node idx
+            self.data.swap(p,i);
+            
+            // now i is assign to has parent idx
+            i = p;
+         }    
+    }
+
+
+    pub fn max_siftup(&mut self, index: usize) {
+        let mut i = index;
+        loop {
+           // if i is root idx will break
+           if i == 0 {
+               break;
+           }
+
+           // get parent index
+           let p = parent(i);
+
+           // when child node <= parent node will break
+           if self.data[i] <= self.data[p] {
+               break;
+           }
+
+           // swap parent node idx with child node idx
+           self.data.swap(p,i);
+           
+           // now i is assign to has parent idx
+           i = p;
+        }    
+   }
+
     /// build Max Heap
     pub fn build_max_heap(&mut self) {
         for index in (0..(self.len() / 2)).rev() {
@@ -97,10 +146,23 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
+    /// build Max Heap
+    pub fn build_max_heap_by_shift_up(&mut self) {
+        for index in (0..self.data.len()).rev() {
+            self.max_siftup(index);
+        }
+    }
+
     /// build Min Heap
     pub fn build_min_heap(&mut self) {
         for index in (0..(self.len() / 2)).rev() {
             self.min_heapify(index);
+        }
+    }
+
+    pub fn build_min_heap_by_siftup(&mut self) {
+        for index in (0..self.data.len()).rev() {
+            self.min_siftup(index);
         }
     }
 
@@ -154,4 +216,26 @@ fn test_build_min_heap() {
     min_heap.heap_sort_by_min_heap();
 
     println!("min_heap = {:?}", min_heap);
+}
+
+#[test]
+fn test_siftup_min_heap() {
+    let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
+    println!("min_heap = {:?}", min_heap);
+
+    min_heap.build_min_heap_by_siftup();
+
+    println!("min_heap = {:?}", min_heap);
+}
+
+#[test]
+fn test_siftup_max_heap() {
+    let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
+
+    println!("max_heap = {:?}", max_heap);
+
+
+    max_heap.build_max_heap_by_shift_up();
+
+    println!("min_heap = {:?}", max_heap);
 }
