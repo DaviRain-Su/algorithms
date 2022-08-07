@@ -139,6 +139,42 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
+    /// the min shift down
+    #[allow(dead_code)]
+    fn min_sift_down(&mut self, heap_len: usize) {
+        let mut cur_idx = 0usize;
+        loop {
+            // get cur_idx has left child idx
+            let mut child_idx = left(cur_idx);
+
+            if cur_idx > heap_len || child_idx >= heap_len {
+                break;
+            }
+
+            // child is the left child of cur_idx
+            // find left child and right child lesser child
+            if child_idx + 1 <= heap_len {
+                // right_child_idx is the right child of cur_idx
+                if self.data[child_idx + 1] < self.data[child_idx] {
+                    child_idx += 1;
+                }
+            }
+            
+
+            // child is the lesser child of cur_idx
+            // if child's parent (cur_idx) <= child will break
+            if self.data[cur_idx] <= self.data[child_idx] {
+                break;
+            }
+            
+            // otherwise swap lesser child idx with cur_idx(parent idx)
+            self.data.swap(child_idx, cur_idx);
+            
+            // assign cur_idx with lesser child idx
+            cur_idx = child_idx;
+        }
+    }
+
     /// build Max Heap
     pub fn build_max_heap_by_max_heapify(&mut self) {
         for index in (0..(self.len() / 2)).rev() {
