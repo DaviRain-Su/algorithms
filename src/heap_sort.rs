@@ -90,7 +90,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     }
 
     /// the min heap siftup
-    pub fn min_siftup(&mut self, index: usize) {
+    pub fn min_sift_up(&mut self, index: usize) {
         let mut cur_idx = index;
         loop {
             // if cur_idx is root idx will break
@@ -115,7 +115,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     }
 
     /// the max heap siftup
-    pub fn max_siftup(&mut self, index: usize) {
+    pub fn max_sift_up(&mut self, index: usize) {
         let mut cur_idx = index;
         loop {
             // if cur_idx is root idx will break
@@ -145,9 +145,9 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         let mut cur_idx = 0usize;
         loop {
             // get cur_idx has left child idx
-            let mut child_idx = left(cur_idx);
+            let mut child_idx = 2 * cur_idx + 1;
 
-            if cur_idx > heap_len || child_idx >= heap_len {
+            if cur_idx > heap_len || child_idx > heap_len {
                 break;
             }
 
@@ -182,10 +182,14 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// build Max Heap
+    /// build Max Heap by max shift up
     pub fn build_max_heap_by_shift_up(&mut self) {
+        // for i = [2; n]
+            // invariant : heap(1, i - 1)
+            // max_sift_up(i)
+            // heap(1, i)
         for index in (0..self.data.len()).rev() {
-            self.max_siftup(index);
+            self.max_sift_up(index);
         }
     }
 
@@ -196,14 +200,19 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
+    /// buikd Min heap by min shift up
     pub fn build_min_heap_by_siftup(&mut self) {
-        for index in (0..self.data.len()).rev() {
-            self.min_siftup(index);
+        // for i = [2; n]
+            // invariant : heap(1, i - 1)
+            // min_sift_up(i)
+            // heap(1, i)
+        for index in 0..self.data.len() {
+            self.min_sift_up(index);
         }
     }
 
     /// asc sort by Max Heap
-    pub fn heap_sort(&mut self) {
+    pub fn heap_sort_by_max_heap(&mut self) {
         self.build_max_heap_by_max_heapify();
         for index in (1..self.data.len()).rev() {
             self.data.swap(0, index);
@@ -221,6 +230,28 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
             self.min_heapify(0);
         }
     }
+
+    pub fn dec_sort_with_min_sift(&mut self) {
+        // for (i = n; i >= 2; i --)
+            // heap(1, i) && sorted(i + 1, n) && x[1..i] <= x[i+1..n]
+            // swap(1, i)
+            // heap(2, i - 1) && sorted(i, n) && x[1..i-1] <= x[i..n]
+            // sift_down(i - 1)
+            // heap(1, i - 1) && sorted(i, n) && x[1..i - 1] <= x[i..n]
+        self.build_min_heap_by_siftup();
+        for idx in (1..self.data.len()).rev() {
+            self.data.swap(0, idx);
+            self.min_sift_down(idx - 1);
+        }
+    }
+
+    pub fn asc_sort_with_max_sift(&mut self) {
+        self.build_max_heap_by_shift_up();
+        
+        todo!()
+    }
+
+
 }
 
 #[test]
@@ -232,9 +263,9 @@ fn test_replace() {
 
 #[test]
 fn test_build_max_heap() {
-    let mut temp_heap = Heap::from_vector(&vec![5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]);
-    temp_heap.heap_sort();
-    assert_eq!(temp_heap.data, vec![0, 3, 5, 7, 9, 10, 12, 12, 23, 23, 23, 32, 45]);
+    let mut max_heap = Heap::from_vector(&vec![5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]);
+    max_heap.heap_sort_by_max_heap();
+    assert_eq!(max_heap.data, vec![0, 3, 5, 7, 9, 10, 12, 12, 23, 23, 23, 32, 45]);
 }
 
 #[test]
@@ -248,7 +279,7 @@ fn test_build_min_heap() {
 fn test_siftup_min_heap() {
     let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
     min_heap.build_min_heap_by_siftup();
-    assert_eq!(min_heap.data, vec![1, 3, 2, 4, 5]);
+    assert_eq!(min_heap.data, vec![1, 2, 3, 4, 5]);
 }
 
 #[test]
@@ -256,4 +287,11 @@ fn test_siftup_max_heap() {
     let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
     max_heap.build_max_heap_by_shift_up();
     assert_eq!(max_heap.data, vec![5, 4, 2, 3, 1])
+}
+
+#[test]
+fn test_siftup_dec_sort() {
+    let mut min_heap = Heap::from_vector(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14]);
+    min_heap.dec_sort_with_min_sift();
+    assert_eq!(min_heap.data, vec![14, 13, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
 }
