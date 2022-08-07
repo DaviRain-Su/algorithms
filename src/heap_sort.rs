@@ -91,51 +91,51 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     }
 
     pub fn min_siftup(&mut self, index: usize) {
-         let mut i = index;
+         let mut cur_idx = index;
          loop {
-            // if i is root idx will break
-            if i == 0 {
+            // if cur_idx is root idx will break
+            if cur_idx == 0 {
                 break;
             }
 
             // get parent index
-            let p = parent(i);
+            let parent_idx = parent(cur_idx);
 
             // when parent node <= child node will break
-            if self.data[p] <= self.data[i] {
+            if self.data[parent_idx] <= self.data[cur_idx] {
                 break;
             }
 
             // swap parent node idx with child node idx
-            self.data.swap(p,i);
+            self.data.swap(parent_idx,cur_idx);
             
-            // now i is assign to has parent idx
-            i = p;
+            // now cur_idx is assign to it's parent idx
+            cur_idx = parent_idx;
          }    
     }
 
 
     pub fn max_siftup(&mut self, index: usize) {
-        let mut i = index;
+        let mut cur_idx = index;
         loop {
            // if i is root idx will break
-           if i == 0 {
+           if cur_idx == 0 {
                break;
            }
 
            // get parent index
-           let p = parent(i);
+           let parent_idx = parent(cur_idx);
 
            // when child node <= parent node will break
-           if self.data[i] <= self.data[p] {
+           if self.data[cur_idx] <= self.data[parent_idx] {
                break;
            }
 
            // swap parent node idx with child node idx
-           self.data.swap(p,i);
+           self.data.swap(parent_idx,cur_idx);
            
-           // now i is assign to has parent idx
-           i = p;
+           // now cur_idx is assign to it's parent idx
+           cur_idx = parent_idx;
         }    
    }
 
