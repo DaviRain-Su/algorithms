@@ -1,6 +1,5 @@
 use std::fmt::{Debug, Display};
 
-#[allow(dead_code)]
 fn parent(i: usize) -> usize {
     i / 2
 }
@@ -117,7 +116,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     pub fn max_siftup(&mut self, index: usize) {
         let mut cur_idx = index;
         loop {
-            // if i is root idx will break
+            // if cur_idx is root idx will break
             if cur_idx == 0 {
                 break;
             }
