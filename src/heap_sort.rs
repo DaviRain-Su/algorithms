@@ -91,8 +91,8 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     }
 
     pub fn min_siftup(&mut self, index: usize) {
-         let mut cur_idx = index;
-         loop {
+        let mut cur_idx = index;
+        loop {
             // if cur_idx is root idx will break
             if cur_idx == 0 {
                 break;
@@ -107,37 +107,36 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
             }
 
             // swap parent node idx with child node idx
-            self.data.swap(parent_idx,cur_idx);
-            
+            self.data.swap(parent_idx, cur_idx);
+
             // now cur_idx is assign to it's parent idx
             cur_idx = parent_idx;
-         }    
+        }
     }
-
 
     pub fn max_siftup(&mut self, index: usize) {
         let mut cur_idx = index;
         loop {
-           // if i is root idx will break
-           if cur_idx == 0 {
-               break;
-           }
+            // if i is root idx will break
+            if cur_idx == 0 {
+                break;
+            }
 
-           // get parent index
-           let parent_idx = parent(cur_idx);
+            // get parent index
+            let parent_idx = parent(cur_idx);
 
-           // when child node <= parent node will break
-           if self.data[cur_idx] <= self.data[parent_idx] {
-               break;
-           }
+            // when child node <= parent node will break
+            if self.data[cur_idx] <= self.data[parent_idx] {
+                break;
+            }
 
-           // swap parent node idx with child node idx
-           self.data.swap(parent_idx,cur_idx);
-           
-           // now cur_idx is assign to it's parent idx
-           cur_idx = parent_idx;
-        }    
-   }
+            // swap parent node idx with child node idx
+            self.data.swap(parent_idx, cur_idx);
+
+            // now cur_idx is assign to it's parent idx
+            cur_idx = parent_idx;
+        }
+    }
 
     /// build Max Heap
     pub fn build_max_heap(&mut self) {
@@ -233,7 +232,6 @@ fn test_siftup_max_heap() {
     let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
 
     println!("max_heap = {:?}", max_heap);
-
 
     max_heap.build_max_heap_by_shift_up();
 
