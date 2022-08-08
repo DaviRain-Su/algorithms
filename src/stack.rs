@@ -1,7 +1,9 @@
-
+/// Stack struct
 #[derive(Debug)]
 pub struct Stack<T> {
+    // data
     data: Vec<T>,
+    // the stack top pointer
     top: usize,
 }
 
