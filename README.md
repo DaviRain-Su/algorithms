@@ -35,4 +35,10 @@ Introduction to algorithms thrid edition implement by rust programming
             - `asc_sort_with_max_sift` function
         - dec sort by Min-Heap by Min Shift_up and shift_down
             - `dec_sort_with_min_sift` function
+- Stack
+    - push element
+    - pop element
+- Queue
+    - pop head element 
+    - push tail element
         

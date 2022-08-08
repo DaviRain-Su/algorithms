@@ -1,11 +1,11 @@
 [package]
 name         = "algorithms-rs"
-version      = "0.1.2"
+version      = "0.1.3"
 edition      = "2021"
 authors      = ["davirain <davirian.yin@gmail.com>"]
 license      = "MIT"
 readme       = "README.md"
-keywords     = ["alogrithms"]
+keywords     = ["alogrithms", "no-std"]
 description  = """
     Implementation of The Introduction to Algorithms Thrid Edition 
     By Rust programming Language
@@ -17,4 +17,5 @@ description  = """
 anyhow = { version = "1.0.60", default-features = false }
 
 [features]
+default = ["std"]
 std = ["anyhow/std"]

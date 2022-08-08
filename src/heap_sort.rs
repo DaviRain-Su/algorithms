@@ -300,7 +300,6 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use alloc::vec;
 
     #[test]
     fn test_replace() {

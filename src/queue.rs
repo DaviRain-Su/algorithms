@@ -16,6 +16,7 @@ pub struct Queue<T> {
 }
 
 impl<T: Clone + Default> Queue<T> {
+    /// construct the queue
     pub fn new(length: usize) -> Self {
         let data = vec![T::default(); length];
         Self {
@@ -26,6 +27,7 @@ impl<T: Clone + Default> Queue<T> {
         }
     }
 
+    /// the queue is empty
     pub fn is_empty(&self) -> bool {
         if self.head == self.tail {
             true
@@ -34,6 +36,7 @@ impl<T: Clone + Default> Queue<T> {
         }
     }
 
+    /// push head element from the queue
     pub fn en_queue(&mut self, element: T) -> anyhow::Result<()> {
         if self.head == (self.tail + 1) % self.len {
             return Err(anyhow::anyhow!("overflow"));
@@ -56,6 +59,7 @@ impl<T: Clone + Default> Queue<T> {
         Ok(())
     }
 
+    /// pop tail element from the queue
     pub fn de_queue(&mut self) -> anyhow::Result<T> {
         if self.is_empty() {
             return Err(anyhow::anyhow!("underflow"));
@@ -73,7 +77,6 @@ impl<T: Clone + Default> Queue<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use alloc::string::ToString;
 
     fn process_result<T>(result: Result<T, anyhow::Error>) {
         match result {
