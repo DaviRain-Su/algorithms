@@ -1,6 +1,7 @@
+#![cfg_attr(not(feature = "std"), no_std)]
 /// # Introduction to algorithms thrid edition implement by rust programming
-/// 
-/// ## Now Implement 
+///
+/// ## Now Implement
 ///    - heap sort algorithm
 ///        - Max Heap
 ///             - Asc sort by Max Heap,`asc_sort_with_max_sift`, `heap_sort_by_max_heap`
@@ -13,6 +14,8 @@
 ///         - push queue tail element
 ///         - pop queue head element
 ///
+extern crate alloc;
+
 pub mod heap_sort;
-pub mod stack;
 pub mod queue;
+pub mod stack;
