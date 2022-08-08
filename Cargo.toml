@@ -1,11 +1,15 @@
 [package]
 name         = "algorithms-rs"
-version      = "0.1.3"
+version      = "0.1.4"
 edition      = "2021"
 authors      = ["davirain <davirian.yin@gmail.com>"]
 license      = "MIT"
 readme       = "README.md"
 keywords     = ["alogrithms", "no-std"]
+documentation = "https://docs.rs/algorithms-rs"
+homepage = "https://docs.rs/algorithms-rs"
+repository = "https://github.com/DaviRain-Su/algorithms-rs"
+categories = ["algorithm"]
 description  = """
     Implementation of The Introduction to Algorithms Thrid Edition 
     By Rust programming Language
