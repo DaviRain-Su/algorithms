@@ -1,5 +1,5 @@
 #![cfg_attr(not(feature = "std"), no_std)]
-//! # Introduction to algorithms 
+//! # Introduction to algorithms
 //! > thrid edition implement by rust programming
 //!
 //! ## Now Implement
@@ -23,3 +23,7 @@ pub mod heap_sort;
 pub mod queue;
 /// stack struct module
 pub mod stack;
+
+pub use heap_sort::Heap;
+pub use queue::Queue;
+pub use stack::Stack;

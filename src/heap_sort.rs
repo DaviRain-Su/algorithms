@@ -23,25 +23,58 @@ pub struct Heap<T> {
 }
 
 impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
-    /// create a heap from vector
-    pub fn from_vector(array: &[T]) -> Self {
+    /// Creating a empty heap
+    ///
+    /// ```rust
+    /// use algorithms_rs::Heap;
+    ///
+    /// let empty_heap = Heap::<i32>::new();
+    ///
+    /// assert_eq!(empty_heap.is_empty(), true);
+    /// ```
+    pub fn new() -> Self {
         Self {
-            data: array.into(),
-            size: array.len() - 1,
+            data: vec![],
+            size: 0,
         }
     }
 
-    /// the present heap size
+    /// Creating a heap from an array
+    ///
+    /// ```rust
+    /// use algorithms_rs::Heap;
+    ///
+    /// let empty_heap = Heap::<i32>::from_vector(&vec![1]).unwrap();
+    ///
+    /// assert_eq!(empty_heap.is_empty(), true);
+    /// ```
+    pub fn from_vector(array: &[T]) -> anyhow::Result<Self> {
+        if array.len() == 0 {
+            return Err(anyhow::anyhow!("Can't create a empty heap"));
+        }
+
+        Ok(Self {
+            data: array.into(),
+            size: array.len() - 1,
+        })
+    }
+
+    /// Length of the heap
     pub fn len(&self) -> usize {
         self.size
     }
 
-    /// the heap is empty
+    /// Determine if the heap is empty
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
 
-    /// max heap heapify
+    /// Get the internal data of the heap
+    pub fn inner_vec(&self) -> &[T] {
+        &self.data
+    }
+
+    /// Big root heap adjustment Recursive algorithm implementation
     pub fn max_heapify(&mut self, index: usize) {
         // setting largest is index
         let mut largest = index;
@@ -66,7 +99,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// the min heap heapify
+    /// Small root heap adjustment Recursive algorithm implementation
     pub fn min_heapify(&mut self, index: usize) {
         // setting min is index
         let mut min = index;
@@ -91,7 +124,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// the min heap siftup
+    /// Small root heap upward adjustment Non-recursive algorithm implementation
     pub fn min_sift_up(&mut self, index: usize) {
         let mut cur_idx = index;
         loop {
@@ -116,7 +149,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// the max heap siftup
+    /// Big root heap upward adjustment Non-recursive algorithm implementation
     pub fn max_sift_up(&mut self, index: usize) {
         let mut cur_idx = index;
         loop {
@@ -141,7 +174,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// the min shift down
+    /// Small root heap downward adjustment Non-recursive algorithm implementation
     pub fn min_sift_down(&mut self, heap_len: usize) {
         let mut cur_idx = 0usize;
         loop {
@@ -175,7 +208,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// the max sift down
+    /// Big root heap downward adjustment Non-recursive algorithm implementation
     pub fn max_sift_down(&mut self, heap_len: usize) {
         let mut cur_idx = 0usize;
         loop {
@@ -208,14 +241,24 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// build Max Heap
+    /// Constructing a big root heap by recursive adjustment algorithm of big root heap
     pub fn build_max_heap_by_max_heapify(&mut self) {
         for index in (0..(self.len() / 2)).rev() {
             self.max_heapify(index);
         }
     }
 
-    /// build Max Heap by max shift up
+    /// Construction of large root heap by non-recursive adjustment algorithm of large root heap
+    ///
+    /// ```rust
+    /// use algorithms_rs::Heap;
+    ///
+    /// let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]).unwrap();
+    ///
+    /// max_heap.build_max_heap_by_shift_up();
+    ///
+    /// assert_eq!(max_heap.inner_vec().to_vec(), vec![5, 4, 2, 3, 1])
+    /// ```
     pub fn build_max_heap_by_shift_up(&mut self) {
         // for i = [2; n]
         // invariant : heap(1, i - 1)
@@ -226,14 +269,24 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// build Min Heap
+    /// Constructing rootlet heap by recursive adjustment algorithm of rootlet heap
     pub fn build_min_heap_by_min_heapify(&mut self) {
         for index in (0..(self.len() / 2)).rev() {
             self.min_heapify(index);
         }
     }
 
-    /// buikd Min heap by min shift up
+    /// Construction of rootlet heap by non-recursive adjustment algorithm of rootlet heap
+    ///
+    /// ```rust
+    ///  use algorithms_rs::Heap;
+    ///
+    ///  let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]).unwrap();
+    ///
+    ///  min_heap.build_min_heap_by_siftup();
+    ///
+    ///  assert_eq!(min_heap.inner_vec().to_vec(), vec![1, 2, 3, 4, 5]);
+    /// ```
     pub fn build_min_heap_by_siftup(&mut self) {
         // for i = [2; n]
         // invariant : heap(1, i - 1)
@@ -244,7 +297,20 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// asc sort by Max Heap
+    /// Ascending sort implementation based on recursive implementation of the big root heap
+    ///
+    /// ```rust
+    /// use algorithms_rs::Heap;
+    ///
+    /// let mut max_heap = Heap::from_vector(&vec![5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]).unwrap();
+    ///
+    /// max_heap.heap_sort_by_max_heap();
+    ///
+    /// assert_eq!(
+    ///    max_heap.inner_vec().to_vec(),
+    ///    vec![0, 3, 5, 7, 9, 10, 12, 12, 23, 23, 23, 32, 45]
+    /// );
+    /// ```
     pub fn heap_sort_by_max_heap(&mut self) {
         self.build_max_heap_by_max_heapify();
         for index in (1..self.data.len()).rev() {
@@ -254,7 +320,17 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// dec sort by Min Heap
+    /// Descending sort implementation based on recursive implementation of small root heap
+    ///
+    /// ```rust
+    /// use algorithms_rs::Heap;
+    ///
+    /// let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 0, 23, 34, 56, 11, 230, 12]).unwrap();
+    ///
+    /// min_heap.heap_sort_by_min_heap();
+    ///
+    /// assert_eq!(min_heap.inner_vec().to_vec(), vec![230, 56, 34, 23, 12, 11, 3, 2, 1, 0]);
+    /// ```
     pub fn heap_sort_by_min_heap(&mut self) {
         self.build_min_heap_by_min_heapify();
         for index in (1..self.data.len()).rev() {
@@ -264,7 +340,19 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// dec sort by Min Heap
+    /// Descending sort implementation based on non-recursive implementation of small root heap
+    ///
+    /// ```rust
+    ///  use algorithms_rs::Heap;
+    ///
+    ///  let mut min_heap =
+    ///  Heap::from_vector(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14]).unwrap();
+    ///  min_heap.dec_sort_with_min_sift();
+    ///  assert_eq!(
+    ///        min_heap.inner_vec().to_vec(),
+    ///         vec![14, 13, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    ///  );
+    /// ```
     pub fn dec_sort_with_min_sift(&mut self) {
         // for (i = n; i >= 2; i --)
         // heap(1, i) && sorted(i + 1, n) && x[1..i] <= x[i+1..n]
@@ -280,7 +368,17 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
         }
     }
 
-    /// asc sort by Max Heap
+    /// Non-recursive implementation of ascending sort based on large root heap
+    ///
+    /// ```rust
+    ///  use algorithms_rs::Heap;
+    ///
+    ///  let mut max_heap = Heap::from_vector(&vec![9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 0]).unwrap();
+    ///
+    ///  max_heap.asc_sort_with_max_sift();
+    ///
+    ///  assert_eq!(max_heap.inner_vec().to_vec(), vec![0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9]);
+    /// ```
     pub fn asc_sort_with_max_sift(&mut self) {
         // for (i = n; i >= 2; i --)
         // heap(1, i) && sorted(i + 1, n) && x[1..i] <= x[i+1..n]
@@ -310,7 +408,8 @@ mod tests {
 
     #[test]
     fn test_build_max_heap() {
-        let mut max_heap = Heap::from_vector(&vec![5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]);
+        let mut max_heap =
+            Heap::from_vector(&vec![5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]).unwrap();
         max_heap.heap_sort_by_max_heap();
         assert_eq!(
             max_heap.data,
@@ -320,21 +419,21 @@ mod tests {
 
     #[test]
     fn test_build_min_heap() {
-        let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 0, 23, 34, 56, 11, 230, 12]);
+        let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 0, 23, 34, 56, 11, 230, 12]).unwrap();
         min_heap.heap_sort_by_min_heap();
         assert_eq!(min_heap.data, vec![230, 56, 34, 23, 12, 11, 3, 2, 1, 0]);
     }
 
     #[test]
     fn test_siftup_min_heap() {
-        let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
+        let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]).unwrap();
         min_heap.build_min_heap_by_siftup();
         assert_eq!(min_heap.data, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]
     fn test_siftup_max_heap() {
-        let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]);
+        let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]).unwrap();
         max_heap.build_max_heap_by_shift_up();
         assert_eq!(max_heap.data, vec![5, 4, 2, 3, 1])
     }
@@ -342,7 +441,7 @@ mod tests {
     #[test]
     fn test_siftup_dec_sort() {
         let mut min_heap =
-            Heap::from_vector(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14]);
+            Heap::from_vector(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14]).unwrap();
         min_heap.dec_sort_with_min_sift();
         assert_eq!(
             min_heap.data,
@@ -352,7 +451,7 @@ mod tests {
 
     #[test]
     fn test_siftup_asc_sort() {
-        let mut max_heap = Heap::from_vector(&vec![9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 0]);
+        let mut max_heap = Heap::from_vector(&vec![9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 0]).unwrap();
         max_heap.asc_sort_with_max_sift();
         assert_eq!(max_heap.data, vec![0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9]);
     }

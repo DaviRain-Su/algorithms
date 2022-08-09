@@ -1,6 +1,6 @@
 use alloc::vec::Vec;
 
-/// Stack struct
+/// stack data structure
 #[derive(Debug)]
 pub struct Stack<T> {
     // data
@@ -10,7 +10,15 @@ pub struct Stack<T> {
 }
 
 impl<T: Clone> Stack<T> {
-    /// construct stack
+    /// Creating an empty stack
+    ///
+    /// ```rust
+    /// use algorithms_rs::Stack;
+    ///
+    /// let stack = Stack::<i32>::new();
+    ///
+    /// assert_eq!(stack.is_empty(), true);
+    /// ```
     pub fn new() -> Stack<T> {
         Self {
             data: Vec::new(),
@@ -18,7 +26,15 @@ impl<T: Clone> Stack<T> {
         }
     }
 
-    /// the stack is empty
+    /// Determine if stack is empty
+    ///
+    /// ```rust
+    /// use algorithms_rs::Stack;
+    ///
+    /// let stack = Stack::<i32>::new();
+    ///
+    /// assert_eq!(stack.is_empty(), true);
+    /// ```
     pub fn is_empty(&self) -> bool {
         if self.top == 0 {
             true
@@ -27,13 +43,35 @@ impl<T: Clone> Stack<T> {
         }
     }
 
-    /// push one element to stack
+    /// Put an element into the top of the stack of stack
+    ///
+    /// ```rust
+    /// use algorithms_rs::Stack;
+    ///
+    /// let mut stack = Stack::<i32>::new();
+    ///
+    /// stack.push(1);
+    ///
+    /// assert_eq!(stack.is_empty(), false);
+    /// ```
     pub fn push(&mut self, element: T) {
         self.top += 1;
         self.data.push(element);
     }
 
-    /// pop the top element from stack
+    /// Remove an element from the top of the stack of stack
+    ///
+    /// ```rust
+    /// use algorithms_rs::Stack;
+    ///
+    /// let mut stack = Stack::<i32>::new();
+    ///
+    /// stack.push(1);
+    /// let element = stack.pop().unwrap();
+    ///
+    /// assert_eq!(element, 1);
+    /// assert_eq!(stack.is_empty(), true);
+    /// ```
     pub fn pop(&mut self) -> anyhow::Result<T> {
         if self.is_empty() {
             return Err(anyhow::anyhow!("underflow"));

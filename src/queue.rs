@@ -2,7 +2,7 @@ use alloc::format;
 use alloc::vec;
 use alloc::vec::Vec;
 
-/// Queue Struct
+/// Queue data structure
 #[derive(Debug)]
 pub struct Queue<T> {
     // data
@@ -16,7 +16,15 @@ pub struct Queue<T> {
 }
 
 impl<T: Clone + Default> Queue<T> {
-    /// construct the queue
+    /// Create an empty queue of fixed size
+    ///
+    /// ```rust
+    /// use algorithms_rs::Queue;
+    ///
+    /// let empty_queue = Queue::<i32>::new(1);
+    ///
+    /// assert_eq!(empty_queue.is_empty(), true);
+    /// ```
     pub fn new(length: usize) -> Self {
         let data = vec![T::default(); length];
         Self {
@@ -27,7 +35,15 @@ impl<T: Clone + Default> Queue<T> {
         }
     }
 
-    /// the queue is empty
+    /// Determine if queue is empty
+    ///
+    /// ```rust
+    /// use algorithms_rs::Queue;
+    ///
+    /// let empty_queue = Queue::<i32>::new(1);
+    ///
+    /// assert_eq!(empty_queue.is_empty(), true);
+    /// ```
     pub fn is_empty(&self) -> bool {
         if self.head == self.tail {
             true
@@ -36,7 +52,18 @@ impl<T: Clone + Default> Queue<T> {
         }
     }
 
-    /// push head element from the queue
+    /// Enter the queue from the end of the queue
+    ///
+    /// ```rust
+    /// use algorithms_rs::Queue;
+    ///
+    /// let mut queue = Queue::<i32>::new(3);
+    ///
+    /// queue.en_queue(1);
+    /// queue.en_queue(2);
+    ///
+    /// assert_eq!(queue.is_empty(), false);
+    /// ```
     pub fn en_queue(&mut self, element: T) -> anyhow::Result<()> {
         if self.head == (self.tail + 1) % self.len {
             return Err(anyhow::anyhow!("overflow"));
@@ -59,7 +86,21 @@ impl<T: Clone + Default> Queue<T> {
         Ok(())
     }
 
-    /// pop tail element from the queue
+    /// From the head of the queue Out of the queue
+    ///
+    /// ```rust
+    /// use algorithms_rs::Queue;
+    ///
+    /// let mut queue = Queue::<i32>::new(3);
+    ///
+    /// queue.en_queue(1);
+    /// queue.en_queue(2);
+    ///
+    /// queue.de_queue();
+    /// queue.de_queue();
+    ///
+    /// assert_eq!(queue.is_empty(), true);
+    /// ```
     pub fn de_queue(&mut self) -> anyhow::Result<T> {
         if self.is_empty() {
             return Err(anyhow::anyhow!("underflow"));
