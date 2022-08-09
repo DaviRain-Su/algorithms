@@ -41,4 +41,13 @@ Introduction to algorithms thrid edition implement by rust programming
 - Queue
     - pop head element 
     - push tail element
+
+## support no-std feature
+
+config setting:
+```
+algorithms-rs = { version = "0.1", default-features = false }
+```
+
+
         
