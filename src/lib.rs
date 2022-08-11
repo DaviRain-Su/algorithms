@@ -19,12 +19,14 @@ extern crate alloc;
 
 /// heap sort module
 pub mod heap_sort;
+/// Merkle Tree
+pub mod merkle_tree;
 /// queue struct module
 pub mod queue;
 /// stack struct module
 pub mod stack;
-/// Merkle Tree
-pub mod merkle_tree;
+
+pub mod utils;
 
 #[cfg(test)]
 mod tests;

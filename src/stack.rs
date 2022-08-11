@@ -83,22 +83,21 @@ impl<T: Clone> Stack<T> {
     }
 
     /// Return the top element of the stack
-    /// 
+    ///
     /// ```rust
     /// use algorithms_rs::Stack;
-    /// 
+    ///
     /// let mut stack = Stack::<i32>::new();
-    /// 
+    ///
     /// stack.push(1);
     /// stack.push(2);
-    /// 
+    ///
     /// assert_eq!(stack.peek(), Some(&2));
     /// assert_eq!(stack.is_empty(), false);
     /// ```
     pub fn peek(&self) -> Option<&T> {
         self.data.get(self.top - 1)
     }
-    
 }
 
 #[cfg(test)]
