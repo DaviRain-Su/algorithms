@@ -23,6 +23,11 @@ pub mod heap_sort;
 pub mod queue;
 /// stack struct module
 pub mod stack;
+/// Merkle Tree
+pub mod merkle_tree;
+
+#[cfg(test)]
+mod tests;
 
 pub use heap_sort::Heap;
 pub use queue::Queue;
