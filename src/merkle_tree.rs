@@ -41,6 +41,16 @@ pub fn merkle_parent_level(hasher: Vec<[u8; 32]>) -> Vec<[u8; 32]> {
     parent_level
 }
 
+
+// FIXME: when hasher is odd is not same rs_merkle generate merkle root
+pub fn merkle_root(hasher: Vec<[u8; 32]>) -> Vec<[u8; 32]> {
+    let mut current_hashes = hasher.clone();
+    while current_hashes.len() > 1 {
+        current_hashes = merkle_parent_level(current_hashes);
+    }
+    current_hashes
+}
+
 pub fn hash_256(data: &[u8]) -> [u8; 32] {
     let mut hasher = Sha256::new();
     hasher.update(data);
@@ -108,4 +118,20 @@ fn test_merkle_parent_level() {
     for item in result.iter() {
         println!("{:?}", to_hex_string(item));
     }
+}
+
+
+#[test]
+fn test_merkle_root() {
+    use crate::utils::to_hex_string;
+    let leaf_values = ["a", "b", "c", "d"];
+    let leaf: Vec<[u8; 32]> = leaf_values
+        .iter()
+        .map(|value| hash_256(value.as_bytes()))
+        .collect();
+    let result = merkle_root(leaf);
+    for item in result.iter() {
+        println!("{:?}", to_hex_string(item));
+    }
+    // 14ede5e8e97ad9372327728f5099b95604a39593cac3bd38a343ad76205213e7
 }

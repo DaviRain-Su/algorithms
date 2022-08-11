@@ -1,7 +1,7 @@
 #[test]
 fn test_rs_merkle_tree() {
     use rs_merkle::{algorithms::Sha256, Hasher, MerkleTree};
-    let leaf_values = ["a", "b", "c", "d", "e"];
+    let leaf_values = ["a", "b", "c", "d"];
     let leaves: Vec<[u8; 32]> = leaf_values
         .iter()
         .map(|x| Sha256::hash(x.as_bytes()))
