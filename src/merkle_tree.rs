@@ -28,7 +28,6 @@ pub fn merkle_parent(left: &[u8], right: &[u8]) -> [u8; 32] {
     result
 }
 
-
 pub fn merkle_parent_level(hasher: Vec<[u8; 32]>) -> Vec<[u8; 32]> {
     let mut hasher_clone = hasher.clone();
     if hasher.len() % 2 == 1 {
@@ -97,12 +96,14 @@ fn test_string_concat() {
     println!("{}", sum_hash_string);
 }
 
-
 #[test]
 fn test_merkle_parent_level() {
     use crate::utils::to_hex_string;
     let leaf_values = ["a", "b", "c", "d", "e"];
-    let leaf : Vec<[u8; 32]>= leaf_values.iter().map(|value| hash_256(value.as_bytes())).collect();
+    let leaf: Vec<[u8; 32]> = leaf_values
+        .iter()
+        .map(|value| hash_256(value.as_bytes()))
+        .collect();
     let result = merkle_parent_level(leaf);
     for item in result.iter() {
         println!("{:?}", to_hex_string(item));
