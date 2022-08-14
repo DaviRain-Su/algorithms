@@ -1,10 +1,79 @@
-use core::hash;
+use core::fmt::Display;
 
 use sha2::{Digest, Sha256};
 
+use crate::utils::to_hex_string;
+
 /// Merkle tree general use the blockchain
 /// In the block header have merkle tree word in block chain.
-pub struct MerkleTree;
+#[derive(Debug)]
+pub struct MerkleTree {
+    total: usize,
+    nodes: Vec<Vec<Option<[u8; 32]>>>,
+    current_depth: usize,
+    current_index: usize,
+}
+
+impl Display for MerkleTree {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        for item in self.nodes.iter() {
+            for node in item {
+                if node.is_some() {
+                    write!(f, "{}", to_hex_string(&node.unwrap()))?;
+                } else {
+                    write!(f, "{:?}", node)?;
+                }
+                
+            }
+        }
+        Ok(())
+    }
+}
+
+impl MerkleTree {
+    pub fn new() -> Self {
+        Self {
+            total: 0,
+            nodes: vec![],
+            current_depth: 0,
+            current_index: 0,
+        }
+    }
+
+    pub fn build_empty(leaf_node_numbers: usize) -> Self {
+        let max_depth = libm::ceil(libm::log2(leaf_node_numbers as f64)) as usize;
+        println!("max_depth = {}", max_depth);
+
+        let mut layer: Vec<Vec<Option<[u8; 32]>>> = vec![];
+
+        for depth in 0..=max_depth {
+            println!(
+                "2 ^ ({} - {}) = {}",
+                max_depth,
+                depth,
+                (1 << (max_depth - depth)) 
+            );
+            let num_items = leaf_node_numbers / (1 << (max_depth - depth));
+
+            println!("num_items = {}", num_items);
+            
+            let mut level_hashes: Vec<Option<[u8; 32]>> = vec![];
+            for _ in 0..num_items {
+                level_hashes.push(None);
+            }
+            if !level_hashes.is_empty() {
+                layer.push(level_hashes);
+            }
+        }
+
+        Self {
+            total: leaf_node_numbers,
+            nodes: layer,
+            current_depth: 0,
+            current_index: 0,
+        }
+    }
+}
 
 // contruct merkle tree step
 // 1. use hash function for all element do hash
@@ -40,7 +109,6 @@ pub fn merkle_parent_level(hasher: Vec<[u8; 32]>) -> Vec<[u8; 32]> {
     }
     parent_level
 }
-
 
 // FIXME: when hasher is odd is not same rs_merkle generate merkle root
 pub fn merkle_root(hasher: Vec<[u8; 32]>) -> Vec<[u8; 32]> {
@@ -120,7 +188,6 @@ fn test_merkle_parent_level() {
     }
 }
 
-
 #[test]
 fn test_merkle_root() {
     use crate::utils::to_hex_string;
@@ -134,4 +201,29 @@ fn test_merkle_root() {
         println!("{:?}", to_hex_string(item));
     }
     // 14ede5e8e97ad9372327728f5099b95604a39593cac3bd38a343ad76205213e7
+}
+
+#[test]
+fn test_build_merkle_tree_empty() {
+    let merkle_tree = MerkleTree::build_empty(17);
+    println!("{}", merkle_tree);
+}
+
+
+
+#[test]
+fn test_build_merkle_tree() {
+    use crate::utils::to_hex_string;
+    let leaf_values = ["a", "b", "c", "d"];
+    let leaf: Vec<Option<[u8; 32]>> = leaf_values
+        .iter()
+        .map(|value| Some(hash_256(value.as_bytes())))
+        .collect();
+    
+    let mut merkle_tree = MerkleTree::build_empty(4);
+    merkle_tree.nodes[2] = leaf;
+    merkle_tree.nodes[1] = merkle_parent_level(merkle_tree.nodes[2].clone().into_iter().map(|value| value.unwrap()).collect()).into_iter().map(|value| Some(value)).collect();
+    merkle_tree.nodes[0] = merkle_parent_level(merkle_tree.nodes[1].clone().into_iter().map(|value| value.unwrap()).collect()).into_iter().map(|value| Some(value)).collect();
+    
+    println!("{}", merkle_tree);
 }
