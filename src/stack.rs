@@ -1,6 +1,11 @@
 use alloc::vec::Vec;
 
-/// stack data structure
+/// # stack data structure
+/// 在栈中，被删除的是最近插入的元素： 栈的实现是一种后进先出策略。
+/// 这里采用数组实现栈，还有别的方式也是可以实现栈的。
+///
+/// ## 栈的操作
+/// 栈的操作有，栈上的INSERT操作称为压入PUSH,而无元素参数的DELETE操作称为弹出POP。
 #[derive(Debug)]
 pub struct Stack<T> {
     // data
@@ -31,9 +36,19 @@ impl<T: Clone> Stack<T> {
     /// ```rust
     /// use algorithms_rs::Stack;
     ///
-    /// let stack = Stack::<i32>::new();
+    /// let mut stack = Stack::<i32>::new();
     ///
     /// assert_eq!(stack.is_empty(), true);
+    ///
+    /// stack.push(2);
+    ///
+    /// assert_eq!(stack.is_empty(), false);
+    /// ```
+    /// ```no
+    /// STACK-EMPTY(S)
+    /// if S.top == 0
+    ///     return true
+    /// else return false
     /// ```
     pub fn is_empty(&self) -> bool {
         if self.top == 0 {
@@ -54,6 +69,11 @@ impl<T: Clone> Stack<T> {
     ///
     /// assert_eq!(stack.is_empty(), false);
     /// ```
+    /// ```no
+    /// PUSH(S, x)
+    ///     S.top = S.top + 1
+    ///     S[S.top] = x
+    /// ```
     pub fn push(&mut self, element: T) {
         self.top += 1;
         self.data.push(element);
@@ -67,18 +87,31 @@ impl<T: Clone> Stack<T> {
     /// let mut stack = Stack::<i32>::new();
     ///
     /// stack.push(1);
+    ///
     /// let element = stack.pop().unwrap();
     ///
     /// assert_eq!(element, 1);
     /// assert_eq!(stack.is_empty(), true);
+    ///
+    /// if let Err(err) = stack.pop() {
+    ///  assert_eq!(err.to_string(), "underflow".to_string())
+    /// }
+    ///
+    /// ```
+    /// ```no
+    /// POP(S)
+    ///     if STACK-EMPTY(S)
+    ///         error "underflow"
+    ///     else
+    ///         S.top = S.top - 1
+    ///         return S[S.top + 1]
     /// ```
     pub fn pop(&mut self) -> anyhow::Result<T> {
         if self.is_empty() {
             return Err(anyhow::anyhow!("underflow"));
         } else {
             self.top -= 1;
-            let element = self.data.remove(self.top);
-            return Ok(element.clone());
+            return Ok(self.data.remove(self.top));
         }
     }
 
@@ -98,44 +131,16 @@ impl<T: Clone> Stack<T> {
     pub fn peek(&self) -> Option<&T> {
         self.data.get(self.top - 1)
     }
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_is_empty_success() {
-        let empty_stack = Stack::<i32>::new();
-        assert_eq!(true, empty_stack.is_empty());
-    }
-
-    #[test]
-    fn test_is_empty_faild() {
-        let mut empty_stack = Stack::<i32>::new();
-        empty_stack.push(1);
-        assert_eq!(false, empty_stack.is_empty());
-    }
-
-    #[test]
-    fn test_pop_element_success() {
-        let mut stack = Stack::<i32>::new();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        stack.push(4);
-        let ret = stack.pop().unwrap();
-        assert_eq!(ret, 4);
-        assert_eq!(false, stack.is_empty());
-    }
-
-    #[test]
-    fn test_pop_element_faild() {
-        let mut stack = Stack::<i32>::new();
-        let ret = stack.pop();
-        match ret {
-            Ok(_) => todo!(),
-            Err(err) => assert_eq!(err.to_string(), "underflow".to_string()),
-        }
+    /// the stack size
+    /// ```rust
+    /// use algorithms_rs::Stack;
+    ///
+    /// let stack = Stack::<i32>::new();
+    ///
+    /// assert_eq!(0, stack.size());
+    /// ```
+    pub fn size(&self) -> usize {
+        self.top
     }
 }
