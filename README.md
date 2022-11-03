@@ -1,5 +1,7 @@
 # algorithms-rs
 
+[build status](https://app.travis-ci.com/DaviRain-Su/algorithms-rs.svg?branch=main)
+
 Introduction to algorithms thrid edition implement by rust programming
 
 ## Present implement
