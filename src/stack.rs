@@ -122,6 +122,8 @@ impl<T: Clone> Stack<T> {
     ///
     /// let mut stack = Stack::<i32>::new();
     ///
+    /// assert_eq!(stack.peek(), None);
+    ///
     /// stack.push(1);
     /// stack.push(2);
     ///
@@ -129,6 +131,7 @@ impl<T: Clone> Stack<T> {
     /// assert_eq!(stack.is_empty(), false);
     /// ```
     pub fn peek(&self) -> Option<&T> {
+        if self.is_empty() { return None; }
         self.data.get(self.top - 1)
     }
 
