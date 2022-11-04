@@ -1,16 +1,16 @@
 [package]
-name         = "algorithms-rs"
-version      = "0.1.5"
-edition      = "2021"
-authors      = ["davirain <davirian.yin@gmail.com>"]
-license      = "MIT"
-readme       = "README.md"
-keywords     = ["alogrithms", "no-std", "intro-to-algorithms"]
-documentation = "https://docs.rs/algorithms-rs"
-homepage = "https://docs.rs/algorithms-rs"
-repository = "https://github.com/DaviRain-Su/algorithms-rs"
+name = "algorithms-rs"
+version = "0.1.5"
+authors = ["davirain <davirian.yin@gmail.com>"]
 categories = ["algorithms"]
-description  = """
+documentation = "https://docs.rs/algorithms-rs"
+edition = "2021"
+homepage = "https://docs.rs/algorithms-rs"
+keywords = ["alogrithms", "no-std", "intro-to-algorithms"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/DaviRain-Su/algorithms-rs"
+description = """
     Implementation of The Introduction to Algorithms Thrid Edition 
     By Rust programming Language
 """
@@ -19,8 +19,8 @@ description  = """
 
 [dependencies]
 anyhow = { version = "1.0.60", default-features = false }
-sha2 = { version = "0.10", default-features = false }
 libm = "0.2.5"
+sha2 = { version = "0.10", default-features = false }
 
 [dev-dependencies]
 hex-literal = "0.3.4"
@@ -29,6 +29,6 @@ rs_merkle = "1.2.0"
 [features]
 default = ["std"]
 std = [
-    "anyhow/std",
-    "sha2/std",
+  "anyhow/std",
+  "sha2/std",
 ]
