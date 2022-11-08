@@ -2,35 +2,56 @@
 // bubble sort is to look for adjacent indexes which
 // are out of place and interchange their elements
 // until the entire array is sorted.
-
-/// bubble sort can customize the comparison logic based on the comparison function passed in
-pub fn bubble_sort_by<T: core::cmp::PartialOrd, F>(array: &mut [T], cmp_fun: F) -> bool
-where
-    F: FnOnce(&T, &T) -> bool + core::marker::Copy,
-{
-    if array.is_empty() {
-        return true;
-    }
-
-    let mut sorted = false;
-    let len = array.len();
-
-    while !sorted {
-        sorted = true;
-        (0..(len - 1)).for_each(|idx| {
-            if cmp_fun(&array[idx + 1], &array[idx]) {
-                array.swap(idx, idx + 1);
-                sorted = false;
-            }
-        })
-    }
-
-    sorted
+use super::Sort;
+#[derive(Debug)]
+struct BubbleSort<T> {
+    arr: Vec<T>,
 }
 
-/// The ascending sort algorithm for bubble sort
-pub fn bubble_sort<T: core::cmp::PartialOrd>(array: &mut [T]) -> bool {
-    bubble_sort_by(array, |v1, v2| v1 < v2)
+impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
+    fn from_vec(arr: Vec<T>) -> Self {
+        Self { arr }
+    }
+
+    fn into_inner(&self) -> Vec<T> {
+        self.arr.clone()
+    }
+
+    fn sort(&mut self) {
+        let _ = self.bubble_sort();
+    }
+}
+
+impl<T: core::cmp::PartialOrd> BubbleSort<T> {
+    /// bubble sort can customize the comparison logic based on the comparison function passed in
+    pub fn bubble_sort_by<F>(&mut self, cmp_fun: F) -> bool
+    where
+        F: FnOnce(&T, &T) -> bool + core::marker::Copy,
+    {
+        if self.arr.is_empty() {
+            return true;
+        }
+
+        let mut sorted = false;
+        let len = self.arr.len();
+
+        while !sorted {
+            sorted = true;
+            (0..(len - 1)).for_each(|idx| {
+                if cmp_fun(&self.arr[idx + 1], &self.arr[idx]) {
+                    self.arr.swap(idx, idx + 1);
+                    sorted = false;
+                }
+            })
+        }
+
+        sorted
+    }
+
+    /// The ascending sort algorithm for bubble sort
+    pub fn bubble_sort(&mut self) -> bool {
+        self.bubble_sort_by(|v1, v2| v1 < v2)
+    }
 }
 
 #[cfg(test)]
@@ -39,15 +60,15 @@ mod tests {
 
     #[test]
     fn test_bubble_sort() {
-        let mut arr = vec![10, 4, 6, 8, 13, 2, 3];
-        let ret = bubble_sort(&mut arr);
-        println!("{:?}, ret = {}", arr, ret);
+        let mut bubble = BubbleSort::from_vec(vec![10, 4, 6, 8, 13, 2, 3]);
+        bubble.sort();
+        assert!(bubble.is_sort(|v1, v2| v1 < v2));
     }
 
     #[test]
     fn test_bubble_sort_a_empty_arr() {
-        let mut arr = Vec::<i32>::new();
-        let ret = bubble_sort(&mut arr);
-        println!("{:?}, ret = {}", arr, ret);
+        let mut bubble = BubbleSort::from_vec(Vec::<i32>::new());
+        bubble.sort();
+        assert!(bubble.is_sort(|v1, v2| v1 < v2));
     }
 }
