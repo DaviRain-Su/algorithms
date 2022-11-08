@@ -117,7 +117,7 @@ mod tests {
 
     fn process_result<T>(result: Result<T, anyhow::Error>) {
         match result {
-            Ok(_value) => {},
+            Ok(_value) => {}
             Err(err) => {
                 if err.to_string() == *"overflow" {
                     assert_eq!(err.to_string(), "overflow".to_string());
