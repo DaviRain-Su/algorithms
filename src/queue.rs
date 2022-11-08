@@ -45,11 +45,7 @@ impl<T: Clone + Default> Queue<T> {
     /// assert_eq!(empty_queue.is_empty(), true);
     /// ```
     pub fn is_empty(&self) -> bool {
-        if self.head == self.tail {
-            true
-        } else {
-            false
-        }
+        self.head == self.tail
     }
 
     /// Enter the queue from the end of the queue

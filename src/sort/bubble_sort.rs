@@ -4,8 +4,9 @@
 // until the entire array is sorted.
 
 /// bubble sort can customize the comparison logic based on the comparison function passed in
-pub fn bubble_sort_by<T: core::cmp::PartialOrd, F>(array: &mut [T], cmp_fun: F) -> bool 
-    where F: FnOnce(&T, &T) -> bool + core::marker::Copy,
+pub fn bubble_sort_by<T: core::cmp::PartialOrd, F>(array: &mut [T], cmp_fun: F) -> bool
+where
+    F: FnOnce(&T, &T) -> bool + core::marker::Copy,
 {
     if array.is_empty() {
         return true;
@@ -28,11 +29,9 @@ pub fn bubble_sort_by<T: core::cmp::PartialOrd, F>(array: &mut [T], cmp_fun: F) 
 }
 
 /// The ascending sort algorithm for bubble sort
-pub fn bubble_sort<T: core::cmp::PartialOrd>(array: &mut [T]) -> bool 
-{
+pub fn bubble_sort<T: core::cmp::PartialOrd>(array: &mut [T]) -> bool {
     bubble_sort_by(array, |v1, v2| v1 < v2)
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -44,7 +43,7 @@ mod tests {
         let ret = bubble_sort(&mut arr);
         println!("{:?}, ret = {}", arr, ret);
     }
-    
+
     #[test]
     fn test_bubble_sort_a_empty_arr() {
         let mut arr = Vec::<i32>::new();
@@ -52,4 +51,3 @@ mod tests {
         println!("{:?}, ret = {}", arr, ret);
     }
 }
-

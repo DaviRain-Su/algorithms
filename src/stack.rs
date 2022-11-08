@@ -14,6 +14,12 @@ pub struct Stack<T> {
     top: usize,
 }
 
+impl<T: Clone> Default for Stack<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T: Clone> Stack<T> {
     /// Creating an empty stack
     ///
@@ -51,11 +57,7 @@ impl<T: Clone> Stack<T> {
     /// else return false
     /// ```
     pub fn is_empty(&self) -> bool {
-        if self.top == 0 {
-            true
-        } else {
-            false
-        }
+        self.top == 0
     }
 
     /// Put an element into the top of the stack of stack
@@ -108,10 +110,10 @@ impl<T: Clone> Stack<T> {
     /// ```
     pub fn pop(&mut self) -> anyhow::Result<T> {
         if self.is_empty() {
-            return Err(anyhow::anyhow!("underflow"));
+            Err(anyhow::anyhow!("underflow"))
         } else {
             self.top -= 1;
-            return Ok(self.data.remove(self.top));
+            Ok(self.data.remove(self.top))
         }
     }
 

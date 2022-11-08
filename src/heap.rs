@@ -22,6 +22,12 @@ pub struct Heap<T> {
     size: usize,
 }
 
+impl<T: Clone + PartialOrd + Default + Display + Debug> Default for Heap<T> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     /// Creating a empty heap
     ///
@@ -49,7 +55,7 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
     /// assert_eq!(empty_heap.is_empty(), true);
     /// ```
     pub fn from_vector(array: &[T]) -> anyhow::Result<Self> {
-        if array.len() == 0 {
+        if array.is_empty() {
             return Err(anyhow::anyhow!("Can't create a empty heap"));
         }
 
@@ -187,11 +193,10 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
 
             // child is the left child of cur_idx
             // find left child and right child lesser child
-            if child_idx + 1 <= heap_len {
+            if child_idx + 1 < heap_len &&  self.data[child_idx + 1] < self.data[child_idx] {
                 // right_child_idx is the right child of cur_idx
-                if self.data[child_idx + 1] < self.data[child_idx] {
-                    child_idx += 1;
-                }
+                child_idx += 1;
+                
             }
 
             // child is the lesser child of cur_idx
@@ -221,10 +226,8 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
 
             // child is the left child of cur_idx
             // find left child and right child bigger child
-            if child_idx + 1 <= heap_len {
-                if self.data[child_idx + 1] > self.data[child_idx] {
-                    child_idx += 1;
-                }
+            if child_idx + 1 < heap_len && self.data[child_idx + 1] > self.data[child_idx] {
+                child_idx += 1;
             }
 
             // child is the lesser child of cur_idx
