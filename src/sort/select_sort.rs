@@ -1,5 +1,6 @@
 use super::Sort;
 
+/// select sort
 #[derive(Debug)]
 pub struct SelectSort<T> {
     arr: Vec<T>,

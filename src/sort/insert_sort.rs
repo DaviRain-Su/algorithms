@@ -1,5 +1,6 @@
 use super::Sort;
 
+/// Insert sort
 #[derive(Debug)]
 pub struct InsertSort<T> {
     arr: Vec<T>,
@@ -11,7 +12,7 @@ impl<T> InsertSort<T> {
         F: FnOnce(&T, &T) -> bool + core::marker::Copy,
     {
         let len = self.arr.len();
-        
+
         for i in 0..len {
             // 将a[i]插入到a[i - 1], a[i - 2], a[i - 3]...之中
             let mut j = i;

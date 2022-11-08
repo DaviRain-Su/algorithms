@@ -6,6 +6,8 @@ Introduction to algorithms thrid edition implement by rust programming
 
 ## Present implement
 
+### Data Struct
+
 - Heap
   - rec build heap
     - max_heapify
@@ -45,10 +47,16 @@ Introduction to algorithms thrid edition implement by rust programming
   - pop head element
   - push tail element
 
+### Sort algorithms
+
+- Bubble Sort algorithms
+- Insert Sort algorithms
+- Select Sort algorithms
+
 ## support no-std feature
 
 config setting:
 
-```
+```toml
 algorithms-rs = { version = "0.1", default-features = false }
 ```
