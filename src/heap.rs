@@ -193,10 +193,9 @@ impl<T: Clone + PartialOrd + Default + Display + Debug> Heap<T> {
 
             // child is the left child of cur_idx
             // find left child and right child lesser child
-            if child_idx + 1 < heap_len &&  self.data[child_idx + 1] < self.data[child_idx] {
+            if child_idx + 1 < heap_len && self.data[child_idx + 1] < self.data[child_idx] {
                 // right_child_idx is the right child of cur_idx
                 child_idx += 1;
-                
             }
 
             // child is the lesser child of cur_idx
@@ -412,7 +411,7 @@ mod tests {
     #[test]
     fn test_build_max_heap() {
         let mut max_heap =
-            Heap::from_vector(&vec![5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]).unwrap();
+            Heap::from_vector(&[5, 3, 7, 9, 10, 23, 45, 23, 12, 23, 0, 12, 32]).unwrap();
         max_heap.heap_sort_by_max_heap();
         assert_eq!(
             max_heap.data,
@@ -422,21 +421,21 @@ mod tests {
 
     #[test]
     fn test_build_min_heap() {
-        let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 0, 23, 34, 56, 11, 230, 12]).unwrap();
+        let mut min_heap = Heap::from_vector(&[3, 2, 1, 0, 23, 34, 56, 11, 230, 12]).unwrap();
         min_heap.heap_sort_by_min_heap();
         assert_eq!(min_heap.data, vec![230, 56, 34, 23, 12, 11, 3, 2, 1, 0]);
     }
 
     #[test]
     fn test_siftup_min_heap() {
-        let mut min_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]).unwrap();
+        let mut min_heap = Heap::from_vector(&[3, 2, 1, 4, 5]).unwrap();
         min_heap.build_min_heap_by_siftup();
         assert_eq!(min_heap.data, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]
     fn test_siftup_max_heap() {
-        let mut max_heap = Heap::from_vector(&vec![3, 2, 1, 4, 5]).unwrap();
+        let mut max_heap = Heap::from_vector(&[3, 2, 1, 4, 5]).unwrap();
         max_heap.build_max_heap_by_shift_up();
         assert_eq!(max_heap.data, vec![5, 4, 2, 3, 1])
     }
@@ -444,7 +443,7 @@ mod tests {
     #[test]
     fn test_siftup_dec_sort() {
         let mut min_heap =
-            Heap::from_vector(&vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14]).unwrap();
+            Heap::from_vector(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 14]).unwrap();
         min_heap.dec_sort_with_min_sift();
         assert_eq!(
             min_heap.data,
@@ -454,7 +453,7 @@ mod tests {
 
     #[test]
     fn test_siftup_asc_sort() {
-        let mut max_heap = Heap::from_vector(&vec![9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 0]).unwrap();
+        let mut max_heap = Heap::from_vector(&[9, 8, 7, 6, 5, 5, 4, 3, 2, 1, 0]).unwrap();
         max_heap.asc_sort_with_max_sift();
         assert_eq!(max_heap.data, vec![0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9]);
     }

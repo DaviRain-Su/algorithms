@@ -117,11 +117,11 @@ mod tests {
 
     fn process_result<T>(result: Result<T, anyhow::Error>) {
         match result {
-            Ok(_value) => assert!(true, "en_queue successful!"),
+            Ok(_value) => {},
             Err(err) => {
-                if err.to_string() == "overflow".to_string() {
+                if err.to_string() == *"overflow" {
                     assert_eq!(err.to_string(), "overflow".to_string());
-                } else if err.to_string() == "underflow".to_string() {
+                } else if err.to_string() == *"underflow" {
                     assert_eq!(err.to_string(), "underflow".to_string());
                 }
             }
@@ -131,7 +131,7 @@ mod tests {
     #[test]
     fn test_is_empty_queue() {
         let empty_queue = Queue::<i32>::new(3);
-        assert_eq!(true, empty_queue.is_empty());
+        assert!(empty_queue.is_empty());
     }
 
     #[test]
