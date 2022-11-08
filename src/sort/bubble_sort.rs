@@ -3,8 +3,9 @@
 // are out of place and interchange their elements
 // until the entire array is sorted.
 use super::Sort;
+
 #[derive(Debug)]
-struct BubbleSort<T> {
+pub struct BubbleSort<T> {
     arr: Vec<T>,
 }
 
@@ -19,6 +20,12 @@ impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
 
     fn sort(&mut self) {
         let _ = self.bubble_sort();
+    }
+
+    fn sort_by<F>(&mut self, f: F)
+        where
+            F: FnOnce(&T, &T) -> bool + core::marker::Copy {
+        let _ = self.bubble_sort_by(f);
     }
 }
 
@@ -62,13 +69,13 @@ mod tests {
     fn test_bubble_sort() {
         let mut bubble = BubbleSort::from_vec(vec![10, 4, 6, 8, 13, 2, 3]);
         bubble.sort();
-        assert!(bubble.is_sort(|v1, v2| v1 < v2));
+        assert!(bubble.is_sort());
     }
 
     #[test]
     fn test_bubble_sort_a_empty_arr() {
         let mut bubble = BubbleSort::from_vec(Vec::<i32>::new());
         bubble.sort();
-        assert!(bubble.is_sort(|v1, v2| v1 < v2));
+        assert!(bubble.is_sort());
     }
 }
