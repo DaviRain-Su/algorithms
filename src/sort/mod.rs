@@ -2,6 +2,8 @@ mod bubble_sort;
 pub use bubble_sort::*;
 mod select_sort;
 pub use select_sort::*;
+mod insert_sort;
+pub use insert_sort::*;
 
 trait Sort<T: core::cmp::PartialOrd + Clone> {
     fn from_vec(array: Vec<T>) -> Self;
