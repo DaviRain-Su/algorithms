@@ -131,7 +131,9 @@ impl<T: Clone> Stack<T> {
     /// assert_eq!(stack.is_empty(), false);
     /// ```
     pub fn peek(&self) -> Option<&T> {
-        if self.is_empty() { return None; }
+        if self.is_empty() {
+            return None;
+        }
         self.data.get(self.top - 1)
     }
 

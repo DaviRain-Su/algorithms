@@ -24,9 +24,9 @@ pub mod queue;
 /// stack struct module
 pub mod stack;
 
-pub mod utils;
 #[cfg(test)]
 mod tests;
+pub mod utils;
 
 pub use heap::Heap;
 pub use queue::Queue;
