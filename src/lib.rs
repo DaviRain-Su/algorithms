@@ -24,6 +24,9 @@ pub mod queue;
 /// stack struct module
 pub mod stack;
 
+/// sort algorithm
+pub mod sort;
+
 #[cfg(test)]
 mod tests;
 pub mod utils;
