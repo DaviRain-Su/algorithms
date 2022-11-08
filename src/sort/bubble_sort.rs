@@ -14,7 +14,7 @@ impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
         Self { arr }
     }
 
-    fn into_inner(&self) -> Vec<T> {
+    fn inner(&self) -> Vec<T> {
         self.arr.clone()
     }
 
@@ -23,8 +23,9 @@ impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
     }
 
     fn sort_by<F>(&mut self, f: F)
-        where
-            F: FnOnce(&T, &T) -> bool + core::marker::Copy {
+    where
+        F: FnOnce(&T, &T) -> bool + core::marker::Copy,
+    {
         let _ = self.bubble_sort_by(f);
     }
 }
