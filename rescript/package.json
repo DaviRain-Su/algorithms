@@ -1,5 +1,5 @@
 {
-  "name": "algorithms-res",
+  "name": "@davirain/algorithms-res",
   "version": "0.0.1",
   "scripts": {
     "res:build": "rescript",
@@ -12,6 +12,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "rescript": "*",
+    "rescript": "*"
   }
 }
