@@ -1,0 +1,15 @@
+{
+    "name": "algorithms-res",
+    "sources": {
+      "dir": "src",
+      "subdirs": true
+    },
+    "package-specs": {
+      "module": "commonjs",
+      "in-source": true
+    },
+    "suffix": ".bs.js",
+    "reason": { "react-jsx": 3 },
+    "bs-dependencies": []
+  }
+  
