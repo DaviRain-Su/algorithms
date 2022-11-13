@@ -13,16 +13,12 @@ impl<T> InsertSort<T> {
     {
         let len = self.arr.len();
 
-        for i in 0..len {
+        for i in 1..len {
             // 将a[i]插入到a[i - 1], a[i - 2], a[i - 3]...之中
             let mut j = i;
-            loop {
-                if j > 0 && f(&self.arr[j], &self.arr[j - 1]) {
-                    self.arr.swap(j, j - 1);
-                    j -= 1;
-                } else {
-                    break;
-                }
+            while j > 0 && f(&self.arr[j], &self.arr[j - 1]) {
+                self.arr.swap(j, j - 1);
+                j = j - 1;
             }
         }
     }
@@ -52,7 +48,9 @@ mod tests {
     #[test]
     fn test_insert_sort_ok() {
         let mut insert = InsertSort::from_vec(vec![10, 9, 8, 6, 5, 4, 3, 2, 1]);
+        println!("insert sort before: {:?}", insert);
         insert.sort();
+        println!("insert sort after: {:?}", insert);
         assert!(insert.is_sort());
     }
 
