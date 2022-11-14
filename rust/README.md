@@ -52,6 +52,7 @@ Introduction to algorithms thrid edition implement by rust programming
 - Bubble Sort algorithms
 - Insert Sort algorithms
 - Select Sort algorithms
+- Merge Sort algorithms, but not only support ascending order
 
 ## support no-std feature
 

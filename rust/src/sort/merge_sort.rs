@@ -2,6 +2,7 @@ use super::Infite;
 use super::Sort;
 use core::fmt::Debug;
 
+/// Merge Sort
 #[derive(Debug)]
 pub struct MergeSort<T> {
     array: Vec<T>,
@@ -31,11 +32,6 @@ where
 
     fn inner(&self) -> Vec<T> {
         self.array.clone()
-    }
-
-    /// Sort by ascending order
-    fn sort(&mut self) {
-        self.merge_sort_by(|v1, v2| v1 <= v2)
     }
 
     fn sort_by<F>(&mut self, f: F)

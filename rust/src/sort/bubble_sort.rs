@@ -4,6 +4,7 @@
 // until the entire array is sorted.
 use super::Sort;
 
+/// bubble sort
 #[derive(Debug)]
 pub struct BubbleSort<T> {
     arr: Vec<T>,

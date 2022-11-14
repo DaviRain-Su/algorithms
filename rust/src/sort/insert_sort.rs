@@ -14,7 +14,7 @@ impl<T> InsertSort<T> {
         let len = self.arr.len();
 
         for i in 1..len {
-            // 将a[i]插入到a[i - 1], a[i - 2], a[i - 3]...之中
+            // do a[i] insert to a[i - 1], a[i - 2], a[i - 3]... among
             let mut j = i;
             while j > 0 && f(&self.arr[j], &self.arr[j - 1]) {
                 self.arr.swap(j, j - 1);
