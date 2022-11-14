@@ -20,6 +20,7 @@ description = """
 [dependencies]
 anyhow = { version = "1.0.60", default-features = false }
 libm = "0.2.5"
+log = { version = "0.4.17", default-features = false }
 sha2 = { version = "0.10", default-features = false }
 
 [dev-dependencies]
@@ -30,5 +31,6 @@ rs_merkle = "1.2.0"
 default = ["std"]
 std = [
   "anyhow/std",
+  "log/std",
   "sha2/std",
 ]

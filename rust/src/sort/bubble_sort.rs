@@ -18,10 +18,6 @@ impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
         self.arr.clone()
     }
 
-    fn sort(&mut self) {
-        let _ = self.bubble_sort();
-    }
-
     fn sort_by<F>(&mut self, f: F)
     where
         F: FnOnce(&T, &T) -> bool + core::marker::Copy,
@@ -55,11 +51,6 @@ impl<T: core::cmp::PartialOrd> BubbleSort<T> {
 
         sorted
     }
-
-    /// The ascending sort algorithm for bubble sort
-    pub fn bubble_sort(&mut self) -> bool {
-        self.bubble_sort_by(|v1, v2| v1 < v2)
-    }
 }
 
 #[cfg(test)]
@@ -70,6 +61,7 @@ mod tests {
     fn test_bubble_sort() {
         let mut bubble = BubbleSort::from_vec(vec![10, 4, 6, 8, 13, 2, 3]);
         bubble.sort();
+        println!("{:?}", bubble);
         assert!(bubble.is_sort());
     }
 

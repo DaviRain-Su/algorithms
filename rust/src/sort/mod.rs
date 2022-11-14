@@ -4,6 +4,8 @@ mod select_sort;
 pub use select_sort::*;
 mod insert_sort;
 pub use insert_sort::*;
+mod merge_sort;
+pub use merge_sort::*;
 
 /// Generic interface to sorting algorithms
 pub trait Sort<T: core::cmp::PartialOrd + Clone> {
@@ -20,12 +22,12 @@ pub trait Sort<T: core::cmp::PartialOrd + Clone> {
 
     /// Sort by ascending order
     fn sort(&mut self) {
-        self.sort_by(|v1, v2| v1 < v2);
+        self.sort_by(|v1, v2| v1 <= v2);
     }
 
     /// Determine if the sort is ascending
     fn is_sort(&self) -> bool {
-        self.is_sort_by(|v1, v2| v1 < v2)
+        self.is_sort_by(|v1, v2| v1 <= v2)
     }
 
     /// Customized judgments are ordered
@@ -46,4 +48,10 @@ pub trait Sort<T: core::cmp::PartialOrd + Clone> {
         }
         true
     }
+}
+
+pub trait Infite {
+    fn max_value() -> Self;
+
+    fn min_value() -> Self;
 }
