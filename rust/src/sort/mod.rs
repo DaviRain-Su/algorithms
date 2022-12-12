@@ -9,9 +9,6 @@ pub use merge_sort::*;
 
 /// Generic interface to sorting algorithms
 pub trait Sort<T: core::cmp::PartialOrd + Clone> {
-    /// Structuring through arrays
-    fn from_vec(array: Vec<T>) -> Self;
-
     /// Get the internal data
     fn inner(&self) -> Vec<T>;
 

@@ -23,12 +23,13 @@ impl<T> InsertSort<T> {
         }
     }
 }
+impl<T> From<Vec<T>> for InsertSort<T> {
+    fn from(arr: Vec<T>) -> Self {
+        Self { arr }
+    }
+}
 
 impl<T: core::cmp::PartialOrd + Clone> Sort<T> for InsertSort<T> {
-    fn from_vec(array: Vec<T>) -> Self {
-        Self { arr: array }
-    }
-
     fn inner(&self) -> Vec<T> {
         self.arr.clone()
     }
@@ -47,7 +48,7 @@ mod tests {
 
     #[test]
     fn test_insert_sort_ok() {
-        let mut insert = InsertSort::from_vec(vec![10, 9, 8, 6, 5, 4, 3, 2, 1]);
+        let mut insert = InsertSort::from(vec![10, 9, 8, 6, 5, 4, 3, 2, 1]);
         println!("insert sort before: {:?}", insert);
         insert.sort();
         println!("insert sort after: {:?}", insert);
@@ -56,7 +57,7 @@ mod tests {
 
     #[test]
     fn test_insert_sort_a_empty_arr() {
-        let mut insert = InsertSort::from_vec(Vec::<i32>::new());
+        let mut insert = InsertSort::from(Vec::<i32>::new());
         insert.sort();
         assert!(insert.is_sort());
     }

@@ -22,14 +22,16 @@ where
     }
 }
 
+impl<T> From<Vec<T>> for MergeSort<T> {
+    fn from(arr: Vec<T>) -> Self {
+        Self { array: arr }
+    }
+}
+
 impl<T> Sort<T> for MergeSort<T>
 where
     T: core::cmp::PartialOrd + Default + Copy + Infite + Debug,
 {
-    fn from_vec(array: Vec<T>) -> Self {
-        Self { array }
-    }
-
     fn inner(&self) -> Vec<T> {
         self.array.clone()
     }
@@ -118,7 +120,7 @@ fn test_merge_sort() {
     }
     let array = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 
-    let mut merge_sort = MergeSort::from_vec(array);
+    let mut merge_sort = MergeSort::from(array);
     println!("merge_sort: {:?}", merge_sort);
     merge_sort.sort();
     assert!(merge_sort.is_sort());

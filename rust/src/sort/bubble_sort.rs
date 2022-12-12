@@ -10,11 +10,13 @@ pub struct BubbleSort<T> {
     arr: Vec<T>,
 }
 
-impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
-    fn from_vec(arr: Vec<T>) -> Self {
+impl<T> From<Vec<T>> for BubbleSort<T> {
+    fn from(arr: Vec<T>) -> Self {
         Self { arr }
     }
+}
 
+impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
     fn inner(&self) -> Vec<T> {
         self.arr.clone()
     }
@@ -60,7 +62,7 @@ mod tests {
 
     #[test]
     fn test_bubble_sort() {
-        let mut bubble = BubbleSort::from_vec(vec![10, 4, 6, 8, 13, 2, 3]);
+        let mut bubble = BubbleSort::from(vec![10, 4, 6, 8, 13, 2, 3]);
         bubble.sort();
         println!("{:?}", bubble);
         assert!(bubble.is_sort());
@@ -68,7 +70,7 @@ mod tests {
 
     #[test]
     fn test_bubble_sort_a_empty_arr() {
-        let mut bubble = BubbleSort::from_vec(Vec::<i32>::new());
+        let mut bubble = BubbleSort::from(Vec::<i32>::new());
         bubble.sort();
         assert!(bubble.is_sort());
     }

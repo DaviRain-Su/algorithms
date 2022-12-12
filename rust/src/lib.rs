@@ -27,6 +27,9 @@ pub mod stack;
 /// sort algorithm
 pub mod sort;
 
+/// search algorithm
+pub mod search;
+
 #[cfg(test)]
 mod tests;
 pub mod utils;
