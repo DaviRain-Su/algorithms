@@ -63,7 +63,7 @@ where
     }
 }
 
-fn inner_merge<T, F>(arr: &mut Vec<T>, p: usize, q: usize, r: usize, f: F)
+fn inner_merge<T, F>(arr: &mut [T], p: usize, q: usize, r: usize, f: F)
 where
     T: Default + Copy + Infite + Debug,
     F: FnOnce(&T, &T) -> bool + core::marker::Copy,
@@ -104,12 +104,12 @@ where
             if let Some(v) = arr.get_mut(k) {
                 *v = l_arr[i];
             }
-            i = i + 1;
+            i += 1;
         } else {
             if let Some(v) = arr.get_mut(k) {
                 *v = r_arr[j];
             }
-            j = j + 1;
+            j += 1;
         }
     }
 }
@@ -127,8 +127,8 @@ fn test_merge_sort() {
     let array = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 
     let mut merge_sort = MergeSort::from(array);
-    println!("merge_sort: {:?}", merge_sort);
+    println!("merge_sort: {merge_sort:?}");
     merge_sort.sort();
     assert!(merge_sort.is_sort());
-    println!("merge_sort: {:?}", merge_sort);
+    println!("merge_sort: {merge_sort:?}");
 }

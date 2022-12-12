@@ -26,5 +26,5 @@ where
 fn test_binary_search() {
     let list = vec![1];
     let idx = search(&list, Some(&1));
-    println!("idx = {:?}", idx);
+    println!("idx = {idx:?}");
 }

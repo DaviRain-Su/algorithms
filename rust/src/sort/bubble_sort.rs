@@ -70,7 +70,7 @@ mod tests {
     fn test_bubble_sort() {
         let mut bubble = BubbleSort::from(vec![10, 4, 6, 8, 13, 2, 3]);
         bubble.sort();
-        println!("{:?}", bubble);
+        println!("{bubble:?}");
         assert!(bubble.is_sort());
     }
 

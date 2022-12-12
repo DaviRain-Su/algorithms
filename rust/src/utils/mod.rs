@@ -1,5 +1,5 @@
 fn byte_to_hex(byte: &u8) -> String {
-    format!("{:02x}", byte)
+    format!("{byte:02x}")
 }
 
 /// Serializes bytes into a hex string
