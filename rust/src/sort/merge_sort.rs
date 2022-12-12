@@ -5,7 +5,7 @@ use core::fmt::Debug;
 /// Merge Sort
 #[derive(Debug)]
 pub struct MergeSort<T> {
-    array: Vec<T>,
+    arr: Vec<T>,
 }
 
 impl<T> MergeSort<T>
@@ -17,14 +17,20 @@ where
         F: FnOnce(&T, &T) -> bool + core::marker::Copy,
     {
         let start = 0;
-        let end = self.array.len() - 1;
-        inner_merge_sort(&mut self.array, start, end, f);
+        let end = self.arr.len() - 1;
+        inner_merge_sort(&mut self.arr, start, end, f);
     }
 }
 
 impl<T> From<Vec<T>> for MergeSort<T> {
     fn from(arr: Vec<T>) -> Self {
-        Self { array: arr }
+        Self { arr }
+    }
+}
+
+impl<T: core::clone::Clone> From<&[T]> for MergeSort<T> {
+    fn from(arr: &[T]) -> Self {
+        Self { arr: arr.into() }
     }
 }
 
@@ -33,7 +39,7 @@ where
     T: core::cmp::PartialOrd + Default + Copy + Infite + Debug,
 {
     fn inner(&self) -> Vec<T> {
-        self.array.clone()
+        self.arr.clone()
     }
 
     fn sort_by<F>(&mut self, f: F)

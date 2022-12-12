@@ -16,6 +16,12 @@ impl<T> From<Vec<T>> for BubbleSort<T> {
     }
 }
 
+impl<T: core::clone::Clone> From<&[T]> for BubbleSort<T> {
+    fn from(arr: &[T]) -> Self {
+        Self { arr: arr.into() }
+    }
+}
+
 impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
     fn inner(&self) -> Vec<T> {
         self.arr.clone()

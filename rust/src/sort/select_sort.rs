@@ -12,6 +12,12 @@ impl<T> From<Vec<T>> for SelectSort<T> {
     }
 }
 
+impl<T: core::clone::Clone> From<&[T]> for SelectSort<T> {
+    fn from(arr: &[T]) -> Self {
+        Self { arr: arr.into() }
+    }
+}
+
 impl<T> SelectSort<T> {
     pub fn select_sort<F>(&mut self, f: F)
     where

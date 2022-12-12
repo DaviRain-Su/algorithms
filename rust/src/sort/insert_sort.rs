@@ -29,6 +29,12 @@ impl<T> From<Vec<T>> for InsertSort<T> {
     }
 }
 
+impl<T: core::clone::Clone> From<&[T]> for InsertSort<T> {
+    fn from(arr: &[T]) -> Self {
+        Self { arr: arr.into() }
+    }
+}
+
 impl<T: core::cmp::PartialOrd + Clone> Sort<T> for InsertSort<T> {
     fn inner(&self) -> Vec<T> {
         self.arr.clone()
