@@ -11,7 +11,7 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/DaviRain-Su/algorithms-rs"
 description = """
-    Implementation of The Introduction to Algorithms Thrid Edition 
+    Implementation of The Introduction to Algorithms Thrid Edition
     By Rust programming Language
 """
 
@@ -29,8 +29,4 @@ rs_merkle = "1.2.0"
 
 [features]
 default = ["std"]
-std = [
-  "anyhow/std",
-  "log/std",
-  "sha2/std",
-]
+std = [ "anyhow/std","log/std","sha2/std"]

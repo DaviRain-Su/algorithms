@@ -132,3 +132,131 @@ fn test_merge_sort() {
     assert!(merge_sort.is_sort());
     println!("merge_sort: {merge_sort:?}");
 }
+
+type Link<T> = Option<Box<ListNode<T>>>;
+/// link node for sort list merge sort
+#[derive(Debug, PartialEq)]
+pub struct ListNode<T> {
+    pub val: T,
+    pub next: Link<T>,
+}
+
+#[warn(dead_code)]
+fn merge_two_lists_recu<T: Ord + Copy>(
+    list1: Link<T>,
+    list2: Link<T>,
+) -> Link<T> {
+    match (list1, list2) {
+        (Some(l), None) => return Some(l),
+        (None, Some(r)) => return Some(r),
+        (None, None) => return None,
+        (Some(l), Some(r)) => {
+            if l.val <= r.val {
+                return Some(Box::new(ListNode {
+                    next: merge_two_lists(l.next, Some(r)),
+                    val: l.val,
+                }));
+            } else {
+                return Some(Box::new(ListNode {
+                    next: merge_two_lists(Some(l), r.next),
+                    val: r.val,
+                }));
+            }
+        }
+    }
+}
+
+#[warn(dead_code)]
+fn merge_two_lists_no_recu<T: Ord + Copy>(
+    list1: Link<T>,
+    list2: Link<T>,
+) -> Link<T> {
+    let mut output = None;
+
+    let mut next_node_pos = &mut output;
+    let mut l1_opt = list1;
+    let mut l2_opt = list2;
+    loop {
+        let mut l1 = match l1_opt {
+            Some(l1) => l1,
+            None => {
+                *next_node_pos = l2_opt;
+                break;
+            }
+        };
+        let mut l2 = match l2_opt {
+            Some(l2) => l2,
+            None => {
+                *next_node_pos = Some(l1);
+                break;
+            }
+        };
+
+        if l1.val < l2.val {
+            l1_opt = l1.next.take();
+            l2_opt = Some(l2);
+            *next_node_pos = Some(l1);
+        } else {
+            l2_opt = l2.next.take();
+            l1_opt = Some(l1);
+            *next_node_pos = Some(l2);
+        }
+
+        next_node_pos = &mut next_node_pos.as_mut().unwrap().next;
+    }
+
+    output
+}
+
+// list merge sort
+pub fn merge_two_lists<T: Ord>(
+    mut list1: Link<T>,
+    mut list2: Link<T>
+) -> Link<T> {
+    let mut head = None;
+    let mut tail = &mut head;
+
+    loop {
+        match (list1, list2) {
+            (Some(mut l1), Some(mut l2)) => {
+                if l1.val < l2.val {
+                    list1 = l1.next.take();
+                    list2 = Some(l2);
+                    tail = &mut tail.insert(l1).next;
+                } else {
+                    list1 = Some(l1);
+                    list2 = l2.next.take();
+                    tail = &mut tail.insert(l2).next;
+                }
+            },
+            (l1, l2) => break *tail = l1.or(l2),
+        }
+    }
+
+    head
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    macro_rules! list {
+        () => { None };
+        ($head:expr $(, $val:expr)* $(,)?) => {
+            Some(Box::new(ListNode {
+                val: $head,
+                next: list!($($val),*),
+            }))
+        };
+    }
+
+    #[test]
+    fn test_merge_list() {
+        let list1 = list!(1, 3);
+        println!("list1: {:#?}", list1);
+        let list2 = list!(2, 4);
+        println!("list2: {:#?}", list2);
+
+        let result = list!(1, 2, 3, 4);
+        assert_eq!(result, merge_two_lists(list1, list2));
+    }
+}
