@@ -1,6 +1,6 @@
 [package]
 name = "algorithms-rs"
-version = "0.1.9"
+version = "0.1.10"
 authors = ["davirain <davirian.yin@gmail.com>"]
 categories = ["algorithms"]
 documentation = "https://docs.rs/algorithms-rs"
