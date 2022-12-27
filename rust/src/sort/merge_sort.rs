@@ -141,11 +141,8 @@ pub struct ListNode<T> {
     pub next: Link<T>,
 }
 
-#[warn(dead_code)]
-fn merge_two_lists_recu<T: Ord + Copy>(
-    list1: Link<T>,
-    list2: Link<T>,
-) -> Link<T> {
+#[allow(dead_code)]
+fn merge_two_lists_recu<T: Ord + Copy>(list1: Link<T>, list2: Link<T>) -> Link<T> {
     match (list1, list2) {
         (Some(l), None) => return Some(l),
         (None, Some(r)) => return Some(r),
@@ -166,11 +163,8 @@ fn merge_two_lists_recu<T: Ord + Copy>(
     }
 }
 
-#[warn(dead_code)]
-fn merge_two_lists_no_recu<T: Ord + Copy>(
-    list1: Link<T>,
-    list2: Link<T>,
-) -> Link<T> {
+#[allow(dead_code)]
+fn merge_two_lists_no_recu<T: Ord + Copy>(list1: Link<T>, list2: Link<T>) -> Link<T> {
     let mut output = None;
 
     let mut next_node_pos = &mut output;
@@ -209,10 +203,7 @@ fn merge_two_lists_no_recu<T: Ord + Copy>(
 }
 
 // list merge sort
-pub fn merge_two_lists<T: Ord>(
-    mut list1: Link<T>,
-    mut list2: Link<T>
-) -> Link<T> {
+pub fn merge_two_lists<T: Ord>(mut list1: Link<T>, mut list2: Link<T>) -> Link<T> {
     let mut head = None;
     let mut tail = &mut head;
 
@@ -228,7 +219,7 @@ pub fn merge_two_lists<T: Ord>(
                     list2 = l2.next.take();
                     tail = &mut tail.insert(l2).next;
                 }
-            },
+            }
             (l1, l2) => break *tail = l1.or(l2),
         }
     }

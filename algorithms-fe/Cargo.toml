@@ -1,0 +1,13 @@
+[package]
+name = "algorithms-fe"
+version = "0.1.0"
+edition = "2021"
+authors = ["davirain <davirian.yin@gmail.com>"]
+description = "This crate is algorithms fourth edition implemention by rust programming language."
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 绘图库
+plotters = "0.3.3"
