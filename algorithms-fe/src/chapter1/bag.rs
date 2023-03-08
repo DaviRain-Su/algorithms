@@ -27,7 +27,7 @@ impl<Item> Bag<Item> {
 }
 
 impl<T> From<Vec<T>> for Bag<T> {
-    fn from(values: Vec<T>) -> Self {
+    fn from(_values: Vec<T>) -> Self {
         todo!()
     }
 }

@@ -34,6 +34,8 @@ pub mod search;
 mod tests;
 pub mod utils;
 
+pub mod chapter4;
+
 pub use heap::Heap;
 pub use queue::Queue;
 pub use stack::Stack;

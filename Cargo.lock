@@ -23,6 +23,7 @@ dependencies = [
  "hex-literal",
  "libm",
  "log",
+ "num-traits",
  "rs_merkle",
  "sha2",
 ]
