@@ -1,5 +1,8 @@
 use num_traits::bounds::Bounded;
 use num_traits::Zero;
+use std::cmp::PartialOrd;
+use std::fmt::Debug;
+use std::ops::AddAssign;
 
 fn find_max_crossing_subarray<T>(
     array: &[T],
@@ -8,7 +11,7 @@ fn find_max_crossing_subarray<T>(
     high: usize,
 ) -> (usize, usize, T)
 where
-    T: Zero + Bounded + std::ops::AddAssign + std::cmp::PartialOrd + Copy + std::fmt::Debug,
+    T: Zero + Bounded + AddAssign + PartialOrd + Copy + Debug,
 {
     let mut left_sum = T::min_value();
     let mut sum = T::zero();
@@ -40,15 +43,7 @@ where
 
 pub fn find_maximum_suarray<T>(array: &[T], low: usize, hight: usize) -> (usize, usize, T)
 where
-    T: Zero
-        + Bounded
-        + std::ops::AddAssign
-        + std::cmp::PartialOrd
-        + Default
-        + Clone
-        + std::cmp::PartialOrd
-        + Copy
-        + std::fmt::Debug,
+    T: Zero + Bounded + AddAssign + PartialOrd + Default + Clone + Copy + Debug,
 {
     if hight == low {
         let sum = array.get(low).map(|v| v.clone()).unwrap_or_default();
