@@ -1,4 +1,6 @@
 use super::Sort;
+use core::clone::Clone;
+use core::cmp::PartialOrd;
 
 /// select sort
 #[derive(Debug)]
@@ -12,7 +14,7 @@ impl<T> From<Vec<T>> for SelectSort<T> {
     }
 }
 
-impl<T: core::clone::Clone> From<&[T]> for SelectSort<T> {
+impl<T: Clone> From<&[T]> for SelectSort<T> {
     fn from(arr: &[T]) -> Self {
         Self { arr: arr.into() }
     }
@@ -21,7 +23,7 @@ impl<T: core::clone::Clone> From<&[T]> for SelectSort<T> {
 impl<T> SelectSort<T> {
     pub fn select_sort<F>(&mut self, f: F)
     where
-        F: FnOnce(&T, &T) -> bool + core::marker::Copy,
+        F: FnOnce(&T, &T) -> bool + Copy,
     {
         for i in 0..self.arr.len() {
             // 将a[i]和a[i+1..len]最小的元素交换
@@ -37,7 +39,7 @@ impl<T> SelectSort<T> {
 
     pub fn select_sort_by_find_smallest<F>(&mut self, f: F) -> Vec<T>
     where
-        F: FnOnce(Option<&T>, Option<&T>) -> bool + core::marker::Copy,
+        F: FnOnce(Option<&T>, Option<&T>) -> bool + Copy,
     {
         let mut result = vec![];
         for _ in 0..self.arr.len() {
@@ -49,7 +51,7 @@ impl<T> SelectSort<T> {
 
     pub fn find_smallest<F>(&self, f: F) -> usize
     where
-        F: FnOnce(Option<&T>, Option<&T>) -> bool + core::marker::Copy,
+        F: FnOnce(Option<&T>, Option<&T>) -> bool + Copy,
     {
         let mut smallest = self.arr.get(0);
         let mut smallest_index = 0usize;
@@ -63,7 +65,7 @@ impl<T> SelectSort<T> {
     }
 }
 
-impl<T: core::cmp::PartialOrd + Clone> Sort<T> for SelectSort<T> {
+impl<T: PartialOrd + Clone> Sort<T> for SelectSort<T> {
     fn inner(&self) -> Vec<T> {
         self.arr.clone()
     }

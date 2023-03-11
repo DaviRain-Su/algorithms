@@ -1,7 +1,10 @@
+use core::cmp::PartialEq;
+use core::cmp::PartialOrd;
+
 /// binary search function
 pub fn search<T>(list: &[T], item: Option<&T>) -> Option<usize>
 where
-    T: core::cmp::PartialEq + core::cmp::PartialOrd,
+    T: PartialEq + PartialOrd,
 {
     let mut low = 0usize;
     let mut high = list.len(); // or way2: let mut high = list.len() - 1

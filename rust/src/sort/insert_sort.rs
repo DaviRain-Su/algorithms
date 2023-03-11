@@ -1,4 +1,6 @@
 use super::Sort;
+use core::clone::Clone;
+use core::cmp::PartialOrd;
 
 /// Insert sort
 #[derive(Debug)]
@@ -9,7 +11,7 @@ pub struct InsertSort<T> {
 impl<T> InsertSort<T> {
     fn insert_sort<F>(&mut self, f: F)
     where
-        F: FnOnce(&T, &T) -> bool + core::marker::Copy,
+        F: FnOnce(&T, &T) -> bool + Copy,
     {
         let len = self.arr.len();
 
@@ -29,13 +31,13 @@ impl<T> From<Vec<T>> for InsertSort<T> {
     }
 }
 
-impl<T: core::clone::Clone> From<&[T]> for InsertSort<T> {
+impl<T: Clone> From<&[T]> for InsertSort<T> {
     fn from(arr: &[T]) -> Self {
         Self { arr: arr.into() }
     }
 }
 
-impl<T: core::cmp::PartialOrd + Clone> Sort<T> for InsertSort<T> {
+impl<T: PartialOrd + Clone> Sort<T> for InsertSort<T> {
     fn inner(&self) -> Vec<T> {
         self.arr.clone()
     }

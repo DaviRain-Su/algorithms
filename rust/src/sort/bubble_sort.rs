@@ -3,6 +3,7 @@
 // are out of place and interchange their elements
 // until the entire array is sorted.
 use super::Sort;
+use core::cmp::PartialOrd;
 
 /// bubble sort
 #[derive(Debug)]
@@ -22,7 +23,7 @@ impl<T: core::clone::Clone> From<&[T]> for BubbleSort<T> {
     }
 }
 
-impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
+impl<T: Clone + PartialOrd> Sort<T> for BubbleSort<T> {
     fn inner(&self) -> Vec<T> {
         self.arr.clone()
     }
@@ -35,11 +36,11 @@ impl<T: Clone + core::cmp::PartialOrd> Sort<T> for BubbleSort<T> {
     }
 }
 
-impl<T: core::cmp::PartialOrd> BubbleSort<T> {
+impl<T: PartialOrd> BubbleSort<T> {
     /// bubble sort can customize the comparison logic based on the comparison function passed in
     pub fn bubble_sort_by<F>(&mut self, cmp_fun: F) -> bool
     where
-        F: FnOnce(&T, &T) -> bool + core::marker::Copy,
+        F: FnOnce(&T, &T) -> bool + Copy,
     {
         if self.arr.is_empty() {
             return true;
