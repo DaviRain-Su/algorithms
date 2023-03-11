@@ -144,20 +144,20 @@ pub struct ListNode<T> {
 #[allow(dead_code)]
 fn merge_two_lists_recu<T: Ord + Copy>(list1: Link<T>, list2: Link<T>) -> Link<T> {
     match (list1, list2) {
-        (Some(l), None) => return Some(l),
-        (None, Some(r)) => return Some(r),
-        (None, None) => return None,
+        (Some(l), None) => Some(l),
+        (None, Some(r)) => Some(r),
+        (None, None) => None,
         (Some(l), Some(r)) => {
             if l.val <= r.val {
-                return Some(Box::new(ListNode {
+                Some(Box::new(ListNode {
                     next: merge_two_lists(l.next, Some(r)),
                     val: l.val,
-                }));
+                }))
             } else {
-                return Some(Box::new(ListNode {
+                Some(Box::new(ListNode {
                     next: merge_two_lists(Some(l), r.next),
                     val: r.val,
-                }));
+                }))
             }
         }
     }

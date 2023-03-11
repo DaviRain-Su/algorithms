@@ -19,7 +19,7 @@ where
     // Note: 一定要这样使用不能写成 mid..=low
     for i in (low..=mid).rev() {
         if let Some(v) = array.get(i) {
-            sum = sum + *v;
+            sum += *v;
             if sum > left_sum {
                 left_sum = sum;
                 max_left = i;
@@ -31,7 +31,7 @@ where
     let mut max_right = 0usize;
     for i in (mid + 1)..=high {
         if let Some(v) = array.get(i) {
-            sum = sum + *v;
+            sum += *v;
             if sum > right_sum {
                 right_sum = sum;
                 max_right = i;
@@ -47,8 +47,8 @@ where
     T: Zero + Bounded + AddAssign + PartialOrd + Default + Clone + Copy + Debug,
 {
     if hight == low {
-        let sum = array.get(low).map(|v| v.clone()).unwrap_or_default();
-        return (low, hight, sum);
+        let sum = array.get(low).copied().unwrap_or_default();
+        (low, hight, sum)
     } else {
         let mid = ((low as f64 + hight as f64) / 2f64).floor() as usize;
 
@@ -58,11 +58,11 @@ where
             find_max_crossing_subarray(array, low, mid, hight);
 
         if left_sum >= right_sum && left_sum >= cross_sum {
-            return (left_low, left_heigh, left_sum);
+            (left_low, left_heigh, left_sum)
         } else if right_sum >= left_sum && right_sum >= cross_sum {
-            return (right_low, right_high, right_sum);
+            (right_low, right_high, right_sum)
         } else {
-            return (cross_low, cross_hight, cross_sum);
+            (cross_low, cross_hight, cross_sum)
         }
     }
 }
@@ -75,19 +75,4 @@ fn test_find_maximum_subarray() {
         "start is {}, end is {}, sum is {}",
         result.0, result.1, result.2
     );
-}
-
-#[test]
-fn test_array_range() {
-    let array = vec![0, 1, 2];
-    let low = 0;
-    let high = array.len();
-    for idx in low..high {
-        println!("{}", array[idx]);
-    }
-    // 输出 0， 1， 2
-    for idx in (high - 1)..=low {
-        println!("{}", array[idx]);
-    }
-    // 不会输出任何东西
 }
