@@ -4,6 +4,9 @@
 
 Introduction to algorithms thrid edition implement by rust programming
 
+
+## [算法导论](SUMMARY.md)
+
 ## Present implement
 
 ### Data Struct
@@ -53,6 +56,7 @@ Introduction to algorithms thrid edition implement by rust programming
 - Insert Sort algorithms
 - Select Sort algorithms
 - Merge Sort algorithms, but not only support ascending order
+
 
 ## support no-std feature
 
