@@ -1,7 +1,5 @@
 use std::marker::PhantomData;
 
-
-
 pub struct Queue<Item> {
     phantom: PhantomData<Item>,
 }

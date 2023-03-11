@@ -1,6 +1,5 @@
 use std::marker::PhantomData;
 
-
 #[derive(Debug, Clone)]
 pub struct Bag<Item> {
     phantom: PhantomData<Item>,
@@ -45,9 +44,11 @@ fn test_bag() {
     // let mut numbers = Bag::<i32>::from(vec![100, 99, 101, 120, 98, 107, 109, 81, 101, 90]);
     let mut numbers = Bag::<f64>::new();
 
-    vec![100f64, 99.0, 101.0, 120.0, 98.0, 107.0, 109.0, 81.0, 101.0, 90.0].into_iter().for_each(|value|
-        numbers.add(value)
-    );
+    vec![
+        100f64, 99.0, 101.0, 120.0, 98.0, 107.0, 109.0, 81.0, 101.0, 90.0,
+    ]
+    .into_iter()
+    .for_each(|value| numbers.add(value));
 
     let n = numbers.size();
 
@@ -62,7 +63,7 @@ fn test_bag() {
     sum = 0.0;
 
     for number in numbers {
-        sum += (number  - mean) * (number - mean);
+        sum += (number - mean) * (number - mean);
     }
     let std_value = (sum / (n - 1) as f64).sqrt();
 

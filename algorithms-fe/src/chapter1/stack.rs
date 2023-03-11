@@ -1,7 +1,5 @@
 use std::marker::PhantomData;
 
-
-
 pub struct Stack<Item> {
     phantom: PhantomData<Item>,
 }

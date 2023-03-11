@@ -8,5 +8,5 @@
 //！ 算法是计算机科学的基础，是这个领域研究的核心。
 //！
 pub mod chapter1;
-pub mod gcd;
 pub mod draw;
+pub mod gcd;
