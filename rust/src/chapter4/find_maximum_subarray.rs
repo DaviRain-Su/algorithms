@@ -84,9 +84,9 @@ fn test_array_range() {
     for idx in low..high {
         println!("{}", array[idx]);
     }
-    println!("*************");
+    // 输出 0， 1， 2
     for idx in (high - 1)..=low {
         println!("{}", array[idx]);
     }
-    println!("*******----******");
+    // 不会输出任何东西
 }
