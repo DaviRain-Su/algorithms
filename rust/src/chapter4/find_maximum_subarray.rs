@@ -41,7 +41,8 @@ where
     (max_left, max_right, left_sum + right_sum)
 }
 
-pub fn find_maximum_suarray<T>(array: &[T], low: usize, hight: usize) -> (usize, usize, T)
+/// find maximum sub array
+pub fn find_maximum_subarray<T>(array: &[T], low: usize, hight: usize) -> (usize, usize, T)
 where
     T: Zero + Bounded + AddAssign + PartialOrd + Default + Clone + Copy + Debug,
 {
@@ -51,8 +52,8 @@ where
     } else {
         let mid = ((low as f64 + hight as f64) / 2f64).floor() as usize;
 
-        let (left_low, left_heigh, left_sum) = find_maximum_suarray(array, low, mid);
-        let (right_low, right_high, right_sum) = find_maximum_suarray(array, mid + 1, hight);
+        let (left_low, left_heigh, left_sum) = find_maximum_subarray(array, low, mid);
+        let (right_low, right_high, right_sum) = find_maximum_subarray(array, mid + 1, hight);
         let (cross_low, cross_hight, cross_sum) =
             find_max_crossing_subarray(array, low, mid, hight);
 
@@ -67,9 +68,9 @@ where
 }
 
 #[test]
-fn test_find_maximum_suarray() {
+fn test_find_maximum_subarray() {
     let array = vec![-2, 1, -3, 4, -1, 2, 1, -5, 4];
-    let result = find_maximum_suarray(&array, 0, array.len() - 1);
+    let result = find_maximum_subarray(&array, 0, array.len() - 1);
     println!(
         "start is {}, end is {}, sum is {}",
         result.0, result.1, result.2
