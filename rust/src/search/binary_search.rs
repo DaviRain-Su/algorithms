@@ -7,9 +7,10 @@ where
     T: PartialEq + PartialOrd,
 {
     let mut low = 0usize;
-    let mut high = list.len(); // or way2: let mut high = list.len() - 1
+    // or way2: let mut high = list.len() - 1
+    let mut high = list.len();
 
-    // or way2: while low <= high {
+    // or way2: while low <= high
     while low < high {
         let mid = (low + high) / 2;
         let guess = list.get(mid);
