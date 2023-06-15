@@ -30,6 +30,9 @@ pub mod sort;
 /// search algorithm
 pub mod search;
 
+/// data struct
+pub mod datastruct;
+
 #[cfg(test)]
 mod tests;
 pub mod utils;
