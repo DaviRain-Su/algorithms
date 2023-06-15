@@ -6,6 +6,8 @@ mod insert_sort;
 pub use insert_sort::*;
 mod merge_sort;
 pub use merge_sort::*;
+mod quick_sort;
+pub use quick_sort::*;
 
 /// Generic interface to sorting algorithms
 pub trait Sort<T: core::cmp::PartialOrd + Clone> {
