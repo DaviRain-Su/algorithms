@@ -1,6 +1,18 @@
-use alloc::format;
-use alloc::vec;
-use alloc::vec::Vec;
+use std::vec;
+use std::vec::Vec;
+use thiserror::Error;
+
+#[derive(Debug, Error)]
+pub enum QueueError {
+    #[error("Custom Error(`0`)")]
+    Custom(String),
+    #[error("Queue overflow")]
+    Overflow,
+    #[error("Queue underflow")]
+    Underflow,
+    #[error("failed get value index on {0}")]
+    FailedGetValue(usize),
+}
 
 /// Queue data structure
 #[derive(Debug)]
@@ -60,17 +72,14 @@ impl<T: Clone + Default> Queue<T> {
     ///
     /// assert_eq!(queue.is_empty(), false);
     /// ```
-    pub fn en_queue(&mut self, element: T) -> anyhow::Result<()> {
+    pub fn en_queue(&mut self, element: T) -> Result<(), QueueError> {
         if self.head == (self.tail + 1) % self.len {
-            return Err(anyhow::anyhow!("overflow"));
+            return Err(QueueError::Overflow);
         }
         if let Some(value) = self.data.get_mut(self.tail) {
             *value = element;
         } else {
-            return Err(anyhow::anyhow!(format!(
-                "get index of {} element",
-                self.tail
-            )));
+            return Err(QueueError::FailedGetValue(self.tail));
         }
 
         if self.tail == (self.len - 1) {
@@ -97,9 +106,9 @@ impl<T: Clone + Default> Queue<T> {
     ///
     /// assert_eq!(queue.is_empty(), true);
     /// ```
-    pub fn de_queue(&mut self) -> anyhow::Result<T> {
+    pub fn de_queue(&mut self) -> Result<T, QueueError> {
         if self.is_empty() {
-            return Err(anyhow::anyhow!("underflow"));
+            return Err(QueueError::Underflow);
         }
         let element = self.data.get(self.head);
         if self.head == (self.len - 1) {
@@ -115,16 +124,20 @@ impl<T: Clone + Default> Queue<T> {
 mod tests {
     use super::*;
 
-    fn process_result<T>(result: Result<T, anyhow::Error>) {
+    fn process_result<T>(result: Result<T, QueueError>) {
         match result {
             Ok(_value) => {}
-            Err(err) => {
-                if err.to_string() == *"overflow" {
-                    assert_eq!(err.to_string(), "overflow".to_string());
-                } else if err.to_string() == *"underflow" {
-                    assert_eq!(err.to_string(), "underflow".to_string());
+            Err(err) => match err {
+                QueueError::Overflow => {
+                    assert_eq!(err.to_string(), "Queue overflow".to_string());
                 }
-            }
+                QueueError::Underflow => {
+                    assert_eq!(err.to_string(), "Queue underflow".to_string());
+                }
+                e => {
+                    panic!("{e:?}")
+                }
+            },
         }
     }
 

@@ -1,4 +1,3 @@
-#![cfg_attr(not(feature = "std"), no_std)]
 //! # Introduction to algorithms
 //! > thrid edition implement by rust programming
 //!
@@ -15,7 +14,6 @@
 //!         - push queue tail element
 //!         - pop queue head element
 //!
-extern crate alloc;
 
 /// heap sort module
 pub mod heap;

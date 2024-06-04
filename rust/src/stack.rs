@@ -1,4 +1,4 @@
-use alloc::vec::Vec;
+use std::vec::Vec;
 
 /// # stack data structure
 /// 在栈中，被删除的是最近插入的元素： 栈的实现是一种后进先出策略。

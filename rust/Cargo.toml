@@ -23,11 +23,8 @@ libm = "0.2.5"
 log = "0.4.17"
 num-traits = "0.2.15"
 sha2 = "0.10"
+thiserror = "1.0.61"
 
 [dev-dependencies]
 hex-literal = "0.3.4"
 rs_merkle = "1.2.0"
-
-[features]
-default = ["std"]
-std = ["anyhow/std", "log/std", "sha2/std"]

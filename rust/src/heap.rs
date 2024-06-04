@@ -1,5 +1,5 @@
-use alloc::vec::Vec;
-use core::fmt::{Debug, Display};
+use std::fmt::{Debug, Display};
+use std::vec::Vec;
 
 fn parent(i: usize) -> usize {
     i / 2
