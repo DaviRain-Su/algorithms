@@ -1,3 +1,6 @@
+#![allow(clippy::borrowed_box)]
+#![allow(clippy::only_used_in_recursion)]
+
 //! # Introduction to algorithms
 //! > thrid edition implement by rust programming
 //!

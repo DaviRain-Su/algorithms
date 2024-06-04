@@ -53,7 +53,7 @@ impl<T> SelectSort<T> {
     where
         F: FnOnce(Option<&T>, Option<&T>) -> bool + Copy,
     {
-        let mut smallest = self.arr.get(0);
+        let mut smallest = self.arr.first();
         let mut smallest_index = 0usize;
         for i in 1..self.arr.len() {
             if f(self.arr.get(i), smallest) {
