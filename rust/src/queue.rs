@@ -76,11 +76,11 @@ impl<T: Clone + Default> Queue<T> {
         if self.head == (self.tail + 1) % self.len {
             return Err(QueueError::Overflow);
         }
-        if let Some(value) = self.data.get_mut(self.tail) {
-            *value = element;
-        } else {
-            return Err(QueueError::FailedGetValue(self.tail));
-        }
+
+        *self
+            .data
+            .get_mut(self.tail)
+            .ok_or(QueueError::FailedGetValue(self.tail))? = element;
 
         if self.tail == (self.len - 1) {
             self.tail = 0;
@@ -110,13 +110,17 @@ impl<T: Clone + Default> Queue<T> {
         if self.is_empty() {
             return Err(QueueError::Underflow);
         }
-        let element = self.data.get(self.head);
+
         if self.head == (self.len - 1) {
             self.head = 0;
         } else {
             self.head += 1;
         }
-        Ok(element.unwrap().clone())
+
+        self.data
+            .get(self.head)
+            .ok_or(QueueError::FailedGetValue(self.head))
+            .cloned()
     }
 }
 
