@@ -22,6 +22,7 @@ anyhow = "1.0.60"
 libm = "0.2.5"
 log = "0.4.17"
 num-traits = "0.2.15"
+rand = "0.8.5"
 sha2 = "0.10"
 thiserror = "1.0.61"
 
