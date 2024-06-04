@@ -18,24 +18,18 @@
 //!         - pop queue head element
 //!
 
+/// data struct
+pub mod datastruct;
 /// heap sort module
 pub mod heap;
 /// queue struct module
 pub mod queue;
-/// stack struct module
-pub mod stack;
-
-/// sort algorithm
-pub mod sort;
-
 /// search algorithm
 pub mod search;
-
-/// data struct
-pub mod datastruct;
-
-#[cfg(test)]
-mod tests;
+/// sort algorithm
+pub mod sort;
+/// stack struct module
+pub mod stack;
 pub mod utils;
 
 pub mod chapter4;
