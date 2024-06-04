@@ -22,6 +22,7 @@
 pub mod datastruct;
 /// heap sort module
 pub mod heap;
+pub mod my_vec;
 /// queue struct module
 pub mod queue;
 /// search algorithm
