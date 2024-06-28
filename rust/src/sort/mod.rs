@@ -54,3 +54,12 @@ pub trait Infite {
 
     fn min_value() -> Self;
 }
+
+impl Infite for i32 {
+    fn max_value() -> Self {
+        i32::MAX
+    }
+    fn min_value() -> Self {
+        i32::MIN
+    }
+}

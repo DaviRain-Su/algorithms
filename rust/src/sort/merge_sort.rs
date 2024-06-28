@@ -118,20 +118,12 @@ where
 
 #[test]
 fn test_merge_sort() {
-    impl Infite for i32 {
-        fn max_value() -> Self {
-            i32::MAX
-        }
-        fn min_value() -> Self {
-            i32::MIN
-        }
-    }
     let array = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 
-    let merge_sort = MergeSort::from(array);
+    let mut merge_sort = MergeSort::from(array);
     println!("merge_sort: {merge_sort:?}");
-    // merge_sort.sort();
-    // assert!(merge_sort.is_sort());
+    merge_sort.sort();
+    assert!(merge_sort.is_sort());
     println!("merge_sort: {merge_sort:?}");
 }
 
