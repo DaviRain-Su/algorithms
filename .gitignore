@@ -3,3 +3,4 @@ node_modules
 lib
 *.bs.js
 .DS_Store
+*.class

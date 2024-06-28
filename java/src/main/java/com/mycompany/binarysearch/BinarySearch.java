@@ -1,5 +1,8 @@
 package com.mycompany.binarysearch;
 
+import com.mycompany.standrard.In;
+import com.mycompany.standrard.StdIn;
+import com.mycompany.standrard.StdOut;
 import java.util.Arrays;
 
 /**
@@ -8,12 +11,14 @@ import java.util.Arrays;
  */
 public class BinarySearch {
 
-    /// gcd algorithm
-    public static int gcd(int p, int q) {
-        if (q == 0) {
-            return p;
-        } else {
-            return gcd(q, p % q);
+    public static void main(String[] args) {
+        int[] whitelist = In.readInts(args[0]);
+
+        Arrays.sort(whitelist);
+
+        while (!StdIn.isEmpty()) {
+            int key = StdIn.readInt();
+            if (rank(key, whitelist) == -1) StdOut.println(key);
         }
     }
 
