@@ -1,4 +1,5 @@
-/target
+target
 node_modules
 lib
 *.bs.js
+.DS_Store
