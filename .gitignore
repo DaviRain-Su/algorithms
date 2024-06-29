@@ -4,3 +4,4 @@ lib
 *.bs.js
 .DS_Store
 *.class
+.idea

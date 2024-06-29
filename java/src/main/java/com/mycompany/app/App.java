@@ -1,6 +1,7 @@
 package com.mycompany.app;
 
 import com.mycompany.binarysearch.BinarySearch;
+import java.lang.Math;
 
 /**
  * Hello world!
@@ -15,6 +16,10 @@ public class App {
         // test rank
         int[] a = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         System.out.println(BinarySearch.rank(5, a));
+
+        System.out.println(Math.sin(Math.PI / 2));
+        System.out.println(Math.cos(Math.PI / 2));
+        System.out.println(Math.tan(Math.PI / 2));
     }
 
     /// gcd algorithm

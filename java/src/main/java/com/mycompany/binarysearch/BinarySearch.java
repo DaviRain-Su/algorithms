@@ -6,7 +6,7 @@ import com.mycompany.standrard.StdOut;
 import java.util.Arrays;
 
 /**
- * Hello world!
+ * BinarySearch
  *
  */
 public class BinarySearch {
